@@ -1,7 +1,6 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import Aside, { AsideBody, AsideQuickContainer, AsideQuickNav } from '@/components/layout/Aside';
 import { useNavigate } from 'react-router';
-import useAsideStatus from '@/hooks/useAsideStatus';
 import Icon from '@/components/icon/Icon';
 import Nav, {
 	NavButton,
@@ -12,11 +11,9 @@ import Nav, {
 } from '@/components/layout/Navigation/Nav';
 import pages, { TPage, TPages } from '@/Routes/pages';
 import Badge from '@/components/ui/Badge';
-import Button from '@/components/ui/Button';
 import Input from '@/components/form/Input';
 import FieldWrap from '@/components/form/FieldWrap';
 import Modal, { ModalFooter, ModalFooterChild, ModalHeader } from '@/components/ui/Modal';
-import classNames from 'classnames';
 import AsideHeaderPart from '@/templates/asides/_parts/AsideHeader.part';
 import AsideFooterPart from '@/templates/asides/_parts/AsideFooter.part';
 
@@ -30,7 +27,6 @@ const getFlattenPages = (pages: TPages, parentId?: string): TPage[] => {
 };
 
 const Search = () => {
-	const { asideStatus } = useAsideStatus();
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
 	/**

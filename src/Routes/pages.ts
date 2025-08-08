@@ -1,4 +1,3 @@
-import { Product1 } from '@/assets/images';
 import { TIcons } from '@/types/icons.type';
 
 export type TPage = {

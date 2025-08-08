@@ -3,17 +3,15 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/authContext';
 import useDarkMode from '@/hooks/useDarkMode';
 import { LogoDark, LogoLight } from '@/assets/images';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { useFormik } from 'formik';
 import Input from '@/components/form/Input';
 import Button from '@/components/ui/Button';
 import FieldWrap from '@/components/form/FieldWrap';
 import USERS from '@/mocks/user';
 import Card, { CardBody } from '@/components/ui/Card';
-import pages from '@/Routes/pages';
 import Checkbox from '@/components/form/Checkbox';
 import Label from '@/components/form/Label';
-import Description from '@/components/form/Description';
 
 interface IFormValues {
 	username: string;
