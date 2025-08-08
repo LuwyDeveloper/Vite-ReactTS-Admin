@@ -5,7 +5,6 @@ import Protected from '@/Protected/Protected';
 import Root from '@/Root';
 import DefaultLayout from '@/layouts/Default.layout';
 import Providers from '@/Providers/Providers';
-import LandingPage from '@/pages/LandingPage/Landing.page';
 import pages from './pages';
 import Page404Page from '@/pages/Page404.page';
 import UnderConstructionPage from '@/pages/UnderConstruction.page';
@@ -17,11 +16,6 @@ const SalesDashboardPage = lazy(() => import('@/pages/apps/sales/SalesDashboard.
 const SalesListPage = lazy(() => import('@/pages/apps/sales/SalesList.page'));
 const SalesViewPage = lazy(() => import('@/pages/apps/sales/SalesView.page'));
 
-const CustomerLayout = lazy(() => import('@/pages/apps/customer/_layouts/Customer.layout'));
-const CustomerDashboardPage = lazy(() => import('@/pages/apps/customer/CustomerDashboard.page'));
-const CustomerListPage = lazy(() => import('@/pages/apps/customer/CustomerList.page'));
-const CustomerEditPage = lazy(() => import('@/pages/apps/customer/CustomerEdit.page'));
-const CustomerViewPage = lazy(() => import('@/pages/apps/customer/CustomerView.page'));
 
 const ProductsLayout = lazy(() => import('@/pages/apps/products/_layouts/Products.layout'));
 const ProductsDashboardPage = lazy(() => import('@/pages/apps/products/ProductsDashboard.page'));
@@ -39,10 +33,6 @@ const ProjectBoardPage = lazy(() => import('@/pages/apps/projects/ProjectBoard.p
 const ProjectListPage = lazy(() => import('@/pages/apps/projects/ProjectList.page'));
 const ProjectGridPage = lazy(() => import('@/pages/apps/projects/ProjectGrid.page'));
 
-const InvoiceLayout = lazy(() => import('@/pages/apps/invoices/_layouts/Invoice.layout'));
-const InvoicesDashboardPage = lazy(() => import('@/pages/apps/invoices/InvoicesDashboard.page'));
-const InvoicesListPage = lazy(() => import('@/pages/apps/invoices/InvoicesList.page'));
-const InvoicesViwPage = lazy(() => import('@/pages/apps/invoices/InvoicesViw.page'));
 
 const router = createBrowserRouter([
 	{
@@ -57,11 +47,6 @@ const router = createBrowserRouter([
 				path: '/',
 				element: <Root />,
 				children: [
-					{
-						path: '/',
-						element: <LandingPage />,
-					},
-					// Public routes
 					{
 						path: pages.pagesExamples.login.to,
 						element: <LoginPage />,
@@ -105,29 +90,7 @@ const router = createBrowserRouter([
 											},
 										],
 									},
-									{
-										// Customer
-										path: pages.apps.customer.to,
-										element: <CustomerLayout />,
-										children: [
-											{
-												path: pages.apps.customer.to,
-												element: <CustomerDashboardPage />,
-											},
-											{
-												path: pages.apps.customer.subPages.list.to,
-												element: <CustomerListPage />,
-											},
-											{
-												path: pages.apps.customer.subPages.edit.to,
-												element: <CustomerEditPage />,
-											},
-											{
-												path: pages.apps.customer.subPages.view.to,
-												element: <CustomerViewPage />,
-											},
-										],
-									},
+									
 									{
 										// Products
 										path: pages.apps.products.to,
@@ -186,25 +149,7 @@ const router = createBrowserRouter([
 											},
 										],
 									},
-									{
-										// Invoices
-										path: pages.apps.invoices.to,
-										element: <InvoiceLayout />,
-										children: [
-											{
-												path: pages.apps.invoices.to,
-												element: <InvoicesDashboardPage />,
-											},
-											{
-												path: pages.apps.invoices.subPages.list.to,
-												element: <InvoicesListPage />,
-											},
-											{
-												path: pages.apps.invoices.subPages.view.to,
-												element: <InvoicesViwPage />,
-											},
-										],
-									},
+									
 								],
 							},
 						],

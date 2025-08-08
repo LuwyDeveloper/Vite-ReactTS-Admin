@@ -20,17 +20,17 @@ i18n
 	// for all options read: https://www.i18next.com/overview/configuration-options
 	.init({
 		resources: {
-			en: {
-				translation: enTranslation,
-				menu: enMenu,
-			},
 			es: {
 				translation: esTranslation,
 				menu: esMenu,
 			},
+			en: {
+				translation: enTranslation,
+				menu: enMenu,
+			},
 		},
-		fallbackLng: 'en',
-		lng: 'en',
+		fallbackLng: 'es',
+		lng: 'es',
 		// debug: true,
 
 		interpolation: {

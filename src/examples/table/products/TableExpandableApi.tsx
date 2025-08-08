@@ -204,19 +204,6 @@ const TableExpandableApi = () => {
 					},
 				},
 				{
-					accessorKey: 'image',
-					header: 'Image',
-					cell: ({ row, getValue }) => (
-						<div className='flex gap-2'>
-							<img
-								src={getValue<string>()}
-								alt={row.original.name}
-								className='h-10 w-10 rounded-lg object-cover'
-							/>
-						</div>
-					),
-				},
-				{
 					accessorKey: 'name',
 					header: 'Name',
 					cell: ({ row, getValue }) => (

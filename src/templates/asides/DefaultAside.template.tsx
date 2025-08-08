@@ -19,7 +19,6 @@ import Modal, { ModalFooter, ModalFooterChild, ModalHeader } from '@/components/
 import classNames from 'classnames';
 import AsideHeaderPart from '@/templates/asides/_parts/AsideHeader.part';
 import AsideFooterPart from '@/templates/asides/_parts/AsideFooter.part';
-import EXAMPLE from '@/examples/_index';
 
 const getFlattenPages = (pages: TPages, parentId?: string): TPage[] => {
 	return Object.values(pages).flatMap((page) => {
@@ -70,7 +69,7 @@ const Search = () => {
 
 	return (
 		<>
-			{!asideStatus && (
+			{/* {!asideStatus && (
 				<Button
 					icon='Search01'
 					variant='outline'
@@ -79,8 +78,8 @@ const Search = () => {
 					onClick={() => setIsModalOpen(true)}
 					aria-label=''
 				/>
-			)}
-			<FieldWrap
+			)} */}
+			{/* <FieldWrap
 				className={classNames({ hidden: !asideStatus })}
 				firstSuffix={<Icon icon='Search01' className='text-zinc-500' />}
 				lastSuffix={<span className='text-zinc-500'>⌘K</span>}>
@@ -93,7 +92,7 @@ const Search = () => {
 					onClick={() => setIsModalOpen(true)}
 					onChange={() => {}}
 				/>
-			</FieldWrap>
+			</FieldWrap> */}
 			<Modal
 				isOpen={isModalOpen}
 				setIsOpen={setIsModalOpen}
@@ -171,7 +170,7 @@ const DefaultAsideTemplate = () => {
 		setActiveTab(id);
 		localStorage.setItem('bolt_activeTab', id);
 
-		if (id === tabs.dashboard.id) navigate(pages.apps.sales.to);
+		if (id === tabs.dashboard.id) navigate(pages.apps.products.to);
 	};
 	return (
 		<Aside>
@@ -193,8 +192,6 @@ const DefaultAsideTemplate = () => {
 					{[tabs.dashboard.id].includes(activeTab as string) && (
 						<>
 							<NavTitle>Dashboards</NavTitle>
-							<NavItem {...pages.apps.sales} />
-							<NavItem {...pages.apps.customer} />
 							<NavItem {...pages.apps.products}>
 								<NavButton
 									icon='PlusSignCircle'
@@ -202,76 +199,21 @@ const DefaultAsideTemplate = () => {
 									onClick={() => navigate(pages.apps.products.subPages.edit.to)}
 								/>
 							</NavItem>
-							<NavItem {...pages.apps.projects} isChildrenNavButtonOverwrite>
-								<div className='-mx-2 -my-2'>
-									<EXAMPLE.Ui.Dropdown.Snooze />
-								</div>
-							</NavItem>
-							<NavItem {...pages.apps.invoices} />
 						</>
 					)}
 					{[tabs.dashboard.id, tabs.apps.id].includes(activeTab as string) && (
 						<>
 							<NavTitle>Apps</NavTitle>
-							<NavCollapse {...pages.apps.sales}>
-								<NavItem {...pages.apps.sales} />
-								<NavItem {...pages.apps.sales.subPages?.list} />
-								<NavItem {...pages.apps.sales.subPages?.view} />
-							</NavCollapse>
-							<NavCollapse {...pages.apps.customer}>
-								<NavItem {...pages.apps.customer} />
-								<NavItem {...pages.apps.customer.subPages?.list} />
-								<NavItem
-									{...pages.apps.customer.subPages?.edit}
-									to={`${pages.apps.customer.subPages.edit.to}?customerId=17`}
-								/>
-								<NavItem
-									{...pages.apps.customer.subPages?.view}
-									to={`${pages.apps.customer.subPages.view.to}?customerId=17`}
-								/>
-							</NavCollapse>
-							<NavCollapse {...pages.apps.products}>
+							
+							<NavCollapse {...pages.pagesExamples.products}>
 								<NavItem {...pages.apps.products} />
 								<NavItem {...pages.apps.products.subPages?.listmock} />
 								<NavItem {...pages.apps.products.subPages?.list} />
 								<NavItem {...pages.apps.products.subPages?.listnest} />
 								<NavItem {...pages.apps.products.subPages?.create} />
 							</NavCollapse>
-							<NavCollapse {...pages.apps.projects}>
-								<NavItem {...pages.apps.projects} />
-								<NavItem {...pages.apps.projects.subPages?.board} />
-								<NavItem {...pages.apps.projects.subPages?.list} />
-								<NavItem {...pages.apps.projects.subPages?.grid} />
-							</NavCollapse>
-							<NavCollapse {...pages.apps.invoices}>
-								<NavItem {...pages.apps.invoices} />
-								<NavItem {...pages.apps.invoices.subPages?.list} />
-								<NavItem
-									{...pages.apps.invoices.subPages?.view}
-									to={`${pages.apps.invoices.subPages.view.to}?invoiceId=100023`}
-								/>
-							</NavCollapse>
+							
 							<NavSeparator />
-						</>
-					)}
-					{[tabs.dashboard.id].includes(activeTab as string) && (
-						<>
-							<NavTitle>Pages Examples</NavTitle>
-							<NavCollapse {...pages.pagesExamples.list}>
-								<NavItem {...pages.pagesExamples.list.subPages?.example1} />
-								<NavItem {...pages.pagesExamples.list.subPages?.example2} />
-							</NavCollapse>
-							<NavCollapse {...pages.pagesExamples.grid}>
-								<NavItem {...pages.pagesExamples.grid.subPages?.example1} />
-							</NavCollapse>
-							<NavCollapse {...pages.pagesExamples.edit}>
-								<NavItem {...pages.pagesExamples.edit.subPages?.example1} />
-								<NavItem {...pages.pagesExamples.edit.subPages?.example2} />
-							</NavCollapse>
-							<NavItem {...pages.pagesExamples.login} />
-							<NavItem {...pages.pagesExamples.signup} />
-							<NavItem {...pages.pagesExamples.notFound} />
-							<NavItem {...pages.pagesExamples.underConstruction} />
 						</>
 					)}
 				</Nav>

@@ -1,3 +1,4 @@
+import { Product1 } from '@/assets/images';
 import { TIcons } from '@/types/icons.type';
 
 export type TPage = {
@@ -60,7 +61,7 @@ const apps = {
 	products: {
 		id: 'products',
 		to: '/products',
-		text: 'Products',
+		text: 'Products - Mocks',
 		icon: 'PackageOpen',
 		subPages: {
 			listmock: {
@@ -201,20 +202,7 @@ const pagesExamples: TPages = {
 			},
 		},
 	},
-	grid: {
-		id: 'grid',
-		to: '/grid',
-		text: 'Grids',
-		icon: 'GridView',
-		subPages: {
-			example1: {
-				id: 'example1',
-				to: apps.projects.subPages.grid.to,
-				text: 'Example 1',
-				icon: 'GridView',
-			},
-		},
-	},
+
 	edit: {
 		id: 'edit',
 		to: '/edit',
@@ -237,9 +225,15 @@ const pagesExamples: TPages = {
 	},
 	login: {
 		id: 'login',
-		to: '/login',
+		to: '/',
 		text: 'Login',
 		icon: 'Login03',
+	},
+	products: {
+		id: 'products',
+		to: '/products',
+		text: 'Products',
+		icon: 'PackageOpen',
 	},
 	signup: {
 		id: 'signup',

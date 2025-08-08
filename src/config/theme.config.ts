@@ -40,7 +40,7 @@ type TThemeConfigs = {
 const themeConfig: TThemeConfigs = {
 	projectTitle: 'Luwydyro',
 	projectName: 'React TypeScript Tailwind Admin',
-	language: 'en',
+	language: 'es',
 	theme: DARK_MODE.SYSTEM,
 	themeColor: 'blue',
 	themeColorShade: '500',
