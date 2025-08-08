@@ -41,7 +41,7 @@ export const ThemeContextProvider: FC<IThemeContextProviderProps> = ({ children 
 	 */
 	const { i18n } = useTranslation();
 	const [language, setLanguage] = useState<TLang>(
-		(localStorage.getItem('bolt_language') as TLang) || 'en',
+		(localStorage.getItem('bolt_language') as TLang) || 'es',
 	);
 	useLayoutEffect(() => {
 		localStorage.setItem('bolt_language', language);
