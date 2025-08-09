@@ -1,4 +1,5 @@
 import Container from '@/components/layout/Container';
+import * as Yup from 'yup';
 import { useOutletContext, useSearchParams, useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
@@ -39,7 +40,23 @@ const ProductsCreateApiPage = () => {
 	const allTagObjects = Array.from(
 		new Map(products.flatMap((p) => p.tag).map((tag) => [tag.name, tag])).values(),
 	);
-
+	const validationSchema = Yup.object({
+		name: Yup.string()
+			.min(3, 'El nombre debe tener al menos 3 caracteres')
+			.required('El nombre es obligatorio'),
+		sku: Yup.string().required('El SKU es obligatorio'),
+		stock: Yup.number()
+			.typeError('Stock debe ser un número')
+			.integer('Stock debe ser un número entero')
+			.min(0, 'Stock no puede ser negativo')
+			.required('El stock es obligatorio'),
+		price: Yup.number()
+			.typeError('El precio debe ser un número')
+			.positive('El precio debe ser mayor a 0')
+			.required('El precio es obligatorio'),
+		categories: Yup.array().min(1, 'Debe seleccionar al menos una categoría'),
+		tags: Yup.array().min(1, 'Debe seleccionar al menos una etiqueta'),
+	});
 	const formik = useFormik({
 		initialValues: {
 			avatar: '',
@@ -54,14 +71,16 @@ const ProductsCreateApiPage = () => {
 			categories: [],
 			tags: [],
 		},
+		validationSchema,
 		onSubmit: (values) => {
 			const newProduct: IProduct = {
 				id: Date.now(),
 				name: values.name,
 				price: parseFloat(values.price),
 				sku: values.sku,
-				stock: parseInt(values.stock) || 0,
-				sold: 0,
+				stock:
+					typeof values.stock === 'string' ? parseInt(values.stock) || 0 : values.stock,
+				sold: Math.floor(Math.random() * 1000),
 				category: values.categories
 					.map((name) => allCategoryObjects.find((c) => c.name === name))
 					.filter(Boolean) as ICategory[],
@@ -74,10 +93,10 @@ const ProductsCreateApiPage = () => {
 				image: values.avatar || '',
 			};
 
+			console.log('✅ Nuevo producto creado:', newProduct);
 			const updatedProducts = [...products, newProduct];
 			setProducts(updatedProducts);
 			saveProductsToStorage(updatedProducts);
-
 			alert('✅ Producto creado exitosamente');
 			navigate(pages.apps.products.subPages.list.to);
 		},
@@ -190,6 +209,11 @@ const ProductsCreateApiPage = () => {
 												value={formik.values.name}
 												onChange={formik.handleChange}
 											/>
+											{formik.touched.name && formik.errors.name && (
+												<p className='text-sm text-red-500'>
+													{formik.errors.name}
+												</p>
+											)}
 										</div>
 										<div className='col-span-12 md:col-span-6'>
 											<Label htmlFor='sku'>SKU</Label>
@@ -199,6 +223,11 @@ const ProductsCreateApiPage = () => {
 												value={formik.values.sku}
 												onChange={formik.handleChange}
 											/>
+											{formik.touched.sku && formik.errors.sku && (
+												<p className='text-sm text-red-500'>
+													{formik.errors.sku}
+												</p>
+											)}
 										</div>
 										<div className='col-span-12 md:col-span-6'>
 											<Label htmlFor='stock'>Stock</Label>
@@ -208,6 +237,11 @@ const ProductsCreateApiPage = () => {
 												value={formik.values.stock}
 												onChange={formik.handleChange}
 											/>
+											{formik.touched.stock && formik.errors.stock && (
+												<p className='text-sm text-red-500'>
+													{formik.errors.stock}
+												</p>
+											)}
 										</div>
 
 										<div className='col-span-12'>
@@ -216,8 +250,6 @@ const ProductsCreateApiPage = () => {
 												name='description'
 												id='description'
 												placeholder='Product description'
-												value={formik.values.description}
-												onChange={formik.handleChange}
 											/>
 										</div>
 									</div>
@@ -427,6 +459,11 @@ const ProductsCreateApiPage = () => {
 													onChange={formik.handleChange}
 												/>
 											</FieldWrap>
+											{formik.touched.price && formik.errors.price && (
+												<p className='text-sm text-red-500'>
+													{formik.errors.price}
+												</p>
+											)}
 										</div>
 										<div className='col-span-1'>
 											<Label htmlFor='publish'>Publish</Label>
@@ -470,6 +507,12 @@ const ProductsCreateApiPage = () => {
 													</option>
 												))}
 											</Select>
+											{formik.touched.categories &&
+												formik.errors.categories && (
+													<p className='text-sm text-red-500'>
+														{formik.errors.categories}
+													</p>
+												)}
 										</div>
 										<div className='col-span-1'>
 											<Label htmlFor='categories'>Tags</Label>
@@ -485,6 +528,11 @@ const ProductsCreateApiPage = () => {
 													</option>
 												))}
 											</Select>
+											{formik.touched.tags && formik.errors.tags && (
+												<p className='text-sm text-red-500'>
+													{formik.errors.tags}
+												</p>
+											)}
 										</div>
 									</div>
 								</CardBody>

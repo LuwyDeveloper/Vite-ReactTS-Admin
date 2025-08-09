@@ -16,7 +16,6 @@ const SalesDashboardPage = lazy(() => import('@/pages/apps/sales/SalesDashboard.
 const SalesListPage = lazy(() => import('@/pages/apps/sales/SalesList.page'));
 const SalesViewPage = lazy(() => import('@/pages/apps/sales/SalesView.page'));
 
-
 const ProductsLayout = lazy(() => import('@/pages/apps/products/_layouts/Products.layout'));
 const ProductsDashboardPage = lazy(() => import('@/pages/apps/products/ProductsDashboard.page'));
 const ProductsListMocksPage = lazy(() => import('@/pages/apps/products/ProductsListMocks.page'));
@@ -32,7 +31,6 @@ const ProjectDashboardPage = lazy(() => import('@/pages/apps/projects/ProjectDas
 const ProjectBoardPage = lazy(() => import('@/pages/apps/projects/ProjectBoard.page'));
 const ProjectListPage = lazy(() => import('@/pages/apps/projects/ProjectList.page'));
 const ProjectGridPage = lazy(() => import('@/pages/apps/projects/ProjectGrid.page'));
-
 
 const router = createBrowserRouter([
 	{
@@ -90,7 +88,7 @@ const router = createBrowserRouter([
 											},
 										],
 									},
-									
+
 									{
 										// Products
 										path: pages.apps.products.to,
@@ -149,7 +147,6 @@ const router = createBrowserRouter([
 											},
 										],
 									},
-									
 								],
 							},
 						],

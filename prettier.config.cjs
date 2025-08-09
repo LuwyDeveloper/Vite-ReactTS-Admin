@@ -9,7 +9,7 @@ const config = {
 	trailingComma: 'all',
 	bracketSameLine: true,
 	arrowParens: 'always',
-	endOfLine: 'lf',
+	endOfLine: 'crlf',
 };
 
 module.exports = config;
