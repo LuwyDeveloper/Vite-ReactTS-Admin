@@ -231,7 +231,7 @@ const TableExpandableNest = () => {
 					),
 				},
 				{
-					accessorKey: 'title',
+					accessorKey: 'name',
 					header: 'Name',
 					cell: ({ row, getValue }) => (
 						<div
