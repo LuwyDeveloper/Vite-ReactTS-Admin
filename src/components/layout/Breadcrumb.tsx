@@ -17,7 +17,7 @@ interface IBreadcrumbProps {
 	homePath?: string;
 }
 const Breadcrumb: FC<IBreadcrumbProps> = (props) => {
-	const { className, list, homePath = '/sales' } = props;
+	const { className, list, homePath = '/products' } = props;
 	const navigate = useNavigate();
 
 	return (

@@ -423,11 +423,6 @@ const TableExpandableApi = () => {
 							Products
 						</CardTitle>
 					</CardHeaderChild>
-					<CardHeaderChild>
-						<Button aria-label='Crear' variant='soft' color='zinc'>
-							Crear
-						</Button>
-					</CardHeaderChild>
 				</CardHeader>
 				<CardBody className='flex h-96 items-center justify-center'>
 					<div className='flex flex-col items-center gap-4'>
@@ -454,6 +449,15 @@ const TableExpandableApi = () => {
 						}}>
 						Products
 					</CardTitle>
+				</CardHeaderChild>
+				<CardHeaderChild>
+					<Button
+						aria-label='Crear'
+						variant='soft'
+						color='zinc'
+						onClick={() => navigate(pages.apps.products.subPages.create.to)}>
+						Crear
+					</Button>
 				</CardHeaderChild>
 			</CardHeader>
 			<CardBody className='overflow-y-auto'>
