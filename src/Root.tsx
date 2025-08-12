@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router';
 import { useAuth } from './context/authContext';
 import useFontSize from './hooks/useFontSize';
@@ -34,9 +34,17 @@ const RootWrapper = ({ children }: { children: ReactNode }) => {
 const Root = () => {
 	const { isLoading } = useAuth();
 	const location = useLocation();
-
+	const [dots, setDots] = useState('');
 	const { isDarkTheme } = useDarkMode();
+	useEffect(() => {
+		if (!isLoading) return;
 
+		const interval = setInterval(() => {
+			setDots((prev) => (prev.length >= 3 ? '' : prev + '.'));
+		}, 500);
+
+		return () => clearInterval(interval);
+	}, [isLoading]);
 	useEffect(() => {
 		window.scrollTo(0, 0);
 	}, [location.pathname, location.search]);
@@ -67,10 +75,7 @@ const Root = () => {
 										<button
 											className='h-full w-full hover:bg-zinc-500/25'
 											onClick={() => {
-												window.open(
-													'#',
-													'_blank',
-												);
+												window.open('#', '_blank');
 												closeToast();
 											}}>
 											Open
@@ -147,8 +152,12 @@ const Root = () => {
 	return (
 		<RootWrapper>
 			{isLoading && (
-				<div className='flex h-full items-center justify-center'>
+				<div className='flex h-full flex-col items-center justify-center gap-4'>
 					<img src={isDarkTheme ? LogoDark : LogoLight} alt='' className='h-24' />
+					<p className='text-lg font-medium text-gray-600 dark:text-gray-300'>
+						Cargando{dots}
+					</p>
+					<div className='h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-blue-500'></div>
 				</div>
 			)}
 			{!isLoading && (

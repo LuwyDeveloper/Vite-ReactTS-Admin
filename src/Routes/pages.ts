@@ -72,7 +72,7 @@ const apps = {
 			list: {
 				id: 'list',
 				to: '/products/list',
-				text: 'List - API',
+				text: 'List - API FakeStore',
 				icon: 'PackageSearch',
 			},
 			listnest: {

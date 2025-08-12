@@ -200,15 +200,14 @@ const DefaultAsideTemplate = () => {
 					{[tabs.dashboard.id, tabs.apps.id].includes(activeTab as string) && (
 						<>
 							<NavTitle>Apps</NavTitle>
-							
+
 							<NavCollapse {...pages.pagesExamples.products}>
-								<NavItem {...pages.apps.products} />
 								<NavItem {...pages.apps.products.subPages?.listmock} />
 								<NavItem {...pages.apps.products.subPages?.list} />
 								<NavItem {...pages.apps.products.subPages?.listnest} />
 								<NavItem {...pages.apps.products.subPages?.create} />
 							</NavCollapse>
-							
+
 							<NavSeparator />
 						</>
 					)}

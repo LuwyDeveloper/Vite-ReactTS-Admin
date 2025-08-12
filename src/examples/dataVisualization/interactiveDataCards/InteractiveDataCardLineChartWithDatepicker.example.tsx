@@ -3,55 +3,55 @@ import Card, { CardBody, CardHeader, CardHeaderChild, CardTitle } from '@/compon
 import Icon from '@/components/icon/Icon';
 import Badge from '@/components/ui/Badge';
 import priceFormat from '@/utils/priceFormat.util';
-import { useState } from 'react';
-import { IChartOptions } from '@/interface/chart.interface';
-import Chart from '@/components/utils/Chart';
+// import { useState } from 'react';
+// import { IChartOptions } from '@/interface/chart.interface';
+// import Chart from '@/components/utils/Chart';
 import EX_Dropdown from '@/examples/ui/dropdown/_index';
 
 const InteractiveDataCardLineChartWithDatepickerExample = () => {
-	const [state] = useState<IChartOptions>({
-		series: [
-			{
-				name: 'Store Sales',
-				data: [31, 40, 28, 51, 42, 109, 100],
-			},
-			{
-				name: 'Online Sales',
-				data: [11, 32, 45, 32, 34, 52, 41],
-			},
-			{
-				name: 'Other Sales',
-				data: [3, 4, 1, 2, 23, 6, 7],
-			},
-		],
-		options: {
-			chart: { height: 250, type: 'line' },
-			legend: {
-				show: false,
-			},
-			dataLabels: { enabled: false },
-			stroke: {},
-			xaxis: {
-				labels: { show: false },
-				axisBorder: { show: false },
-			},
-			yaxis: {
-				labels: { show: false },
-			},
-			tooltip: { x: { format: 'dd MMM yyyy HH:mm' } },
-			grid: { yaxis: { lines: { show: false } } },
-			fill: {
-				type: 'gradient',
-				gradient: {
-					type: 'horizontal',
-					opacityFrom: 0,
-					opacityTo: 1,
-					stops: [0, 50, 100],
-					colorStops: [],
-				},
-			},
-		},
-	});
+	// const [state] = useState<IChartOptions>({
+	// 	series: [
+	// 		{
+	// 			name: 'Store Sales',
+	// 			data: [31, 40, 28, 51, 42, 109, 100],
+	// 		},
+	// 		{
+	// 			name: 'Online Sales',
+	// 			data: [11, 32, 45, 32, 34, 52, 41],
+	// 		},
+	// 		{
+	// 			name: 'Other Sales',
+	// 			data: [3, 4, 1, 2, 23, 6, 7],
+	// 		},
+	// 	],
+	// 	options: {
+	// 		chart: { height: 250, type: 'line' },
+	// 		legend: {
+	// 			show: false,
+	// 		},
+	// 		dataLabels: { enabled: false },
+	// 		stroke: {},
+	// 		xaxis: {
+	// 			labels: { show: false },
+	// 			axisBorder: { show: false },
+	// 		},
+	// 		yaxis: {
+	// 			labels: { show: false },
+	// 		},
+	// 		tooltip: { x: { format: 'dd MMM yyyy HH:mm' } },
+	// 		grid: { yaxis: { lines: { show: false } } },
+	// 		fill: {
+	// 			type: 'gradient',
+	// 			gradient: {
+	// 				type: 'horizontal',
+	// 				opacityFrom: 0,
+	// 				opacityTo: 1,
+	// 				stops: [0, 50, 100],
+	// 				colorStops: [],
+	// 			},
+	// 		},
+	// 	},
+	// });
 	return (
 		<Card>
 			<CardHeader>
@@ -105,12 +105,12 @@ const InteractiveDataCardLineChartWithDatepickerExample = () => {
 							<Icon icon='TradeUp' /> 7.6
 						</Badge>
 					</div>
-					<Chart
+					{/* <Chart
 						options={state.options}
 						series={state.series}
 						type={state.options.chart?.type}
 						height={state.options.chart?.height}
-					/>
+					/> */}
 				</div>
 			</CardBody>
 		</Card>
