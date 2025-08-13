@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '@/context/authContext';
 import useDarkMode from '@/hooks/useDarkMode';
 import { LogoDark, LogoLight } from '@/assets/images';
@@ -22,7 +22,7 @@ interface IFormValues {
 const LoginPage = () => {
 	const { isDarkTheme } = useDarkMode();
 	const navigate = useNavigate();
-	const { onLogin, onLogout } = useAuth();
+	const { onLogin } = useAuth();
 
 	// useEffect(() => {
 	// 	onLogout(false).then();

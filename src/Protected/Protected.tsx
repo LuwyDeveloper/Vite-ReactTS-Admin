@@ -5,7 +5,7 @@ import { LogoDark, LogoLight } from '@/assets/images';
 import useDarkMode from '@/hooks/useDarkMode';
 
 const Protected = ({ roles }: { roles: ('admin' | 'user' | 'moderator')[] }) => {
-	const { isInitializing, tokenStorage, userData, roles: userRoles } = useAuth();
+	const { isInitializing, tokenStorage, roles: userRoles } = useAuth();
 
 	const hasAccess = roles.some((role) => userRoles.includes(role));
 	const [dots, setDots] = useState('');
@@ -38,7 +38,7 @@ const Protected = ({ roles }: { roles: ('admin' | 'user' | 'moderator')[] }) => 
 		return <Navigate to='/' replace />;
 	}
 	if (tokenStorage && hasAccess) {
-		console.log('Acceso permitido. Usuario autorizado.', tokenStorage, userData);
+		console.log('Acceso permitido. Usuario autorizado.');
 		return <Outlet />;
 	}
 };
