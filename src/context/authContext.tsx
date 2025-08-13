@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router';
 import { IUserDataFromAPI } from '@/mocks/user';
 
 export interface IAuthContextProps {
+	isInitializing: boolean;
 	isLoading: boolean;
 	onLogin: (username: string, password: string, rememberMe: boolean) => Promise<void>;
 	userData: IUserDataFromAPI | null;
@@ -19,6 +20,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [tokenStorage, setTokenStorage] = useState<string | null>(null);
 	const [usernameStorage, setUsernameStorage] = useState<string | null>(null);
+	const [isInitializing, setIsInitializing] = useState(true);
 
 	const navigate = useNavigate();
 
@@ -50,7 +52,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 				localStorage.getItem('username') ?? sessionStorage.getItem('username');
 			const storedUserData =
 				localStorage.getItem('userData') ?? sessionStorage.getItem('userData');
-
+			console.log('Restoring session from storage:');
 			if (storedToken) setTokenStorage(storedToken);
 			if (storedUsername) setUsernameStorage(storedUsername);
 
@@ -58,10 +60,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 				try {
 					const parsedUser = JSON.parse(storedUserData);
 					setUserData(parsedUser);
+					console.log(storedUserData);
 				} catch (err) {
 					console.error('❌ Error al parsear userData', err);
 				}
 			}
+			setIsInitializing(false);
 		};
 
 		restoreSession();
@@ -100,12 +104,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 		sessionStorage.removeItem('username');
 		sessionStorage.removeItem('token');
 		sessionStorage.removeItem('userData');
+		// setUserData(null);
+		console.log('Logging out...');
+
 		setIsLoading(false);
 		if (isNavigate) navigate(`./`, { replace: true });
 	};
 
 	const value: IAuthContextProps = useMemo(
 		() => ({
+			isInitializing,
 			isLoading,
 			onLogin,
 			userData,
@@ -115,7 +123,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 			onLogout,
 		}),
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-		[isLoading, userData, usernameStorage, tokenStorage],
+		[isInitializing, isLoading, userData, usernameStorage, tokenStorage],
 	);
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

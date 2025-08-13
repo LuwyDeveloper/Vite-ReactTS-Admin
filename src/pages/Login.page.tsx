@@ -24,10 +24,10 @@ const LoginPage = () => {
 	const navigate = useNavigate();
 	const { onLogin, onLogout } = useAuth();
 
-	useEffect(() => {
-		onLogout(false).then();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	// useEffect(() => {
+	// 	onLogout(false).then();
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, []);
 
 	const handleLogin = (username: string, password: string, rememberMe: boolean) => {
 		onLogin(username, password, rememberMe).then(
@@ -90,7 +90,6 @@ const LoginPage = () => {
 						</div>
 
 						<div className='mt-5'>
-
 							<div>
 								<div className='grid gap-y-4'>
 									<div>
