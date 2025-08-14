@@ -26,7 +26,7 @@ import priceFormat from '@/utils/priceFormat.util';
 import Checkbox from '@/components/form/Checkbox';
 import { useNavigate } from 'react-router';
 import pages from '@/Routes/pages';
-import mapApiProductToProduct, { IProduct, IApiProduct } from '@/api/productsNest';
+import { mapProductToApiTable, IProduct, fetchProducts } from '@/api/productsNest';
 import { useAuth } from '@/context/authContext';
 
 const EditSubComponent = ({
@@ -102,47 +102,33 @@ const TableExpandableNest = () => {
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
-		const fetchProducts = async () => {
+		const loadData = async () => {
+			setLoading(true);
 			try {
-				setLoading(true);
-				const response = await fetch('https://nest-luwy-pack.onrender.com/api/products');
-
-				if (!response.ok) {
-					throw new Error(`Error: ${response.status}`);
-				}
-
-				const json = await response.json();
-				const StoreProducts: IApiProduct[] = json.products;
-				const mappedProducts = StoreProducts.map((p, i) => mapApiProductToProduct(p, i));
-
-				setData(mappedProducts);
-				setError(null);
+				const products = await fetchProducts();
+				setData(products);
 			} catch (err) {
-				setError(err instanceof Error ? err.message : 'Error al cargar productos');
-				console.error('Error fetching products:', err);
+				setError(err instanceof Error ? err.message : 'Error desconocido');
 			} finally {
 				setLoading(false);
 			}
 		};
-
-		fetchProducts();
+		loadData();
 	}, []);
 
 	const handleUpdate = async (updatedProduct: IProduct) => {
 		try {
-			const body = {
-				title: updatedProduct.name,
-				stock: updatedProduct.stock,
-				price: updatedProduct.price,
-			};
+			const body = mapProductToApiTable(updatedProduct);
 			if (!tokenStorage) {
 				console.error('No hay token, el usuario probablemente no ha iniciado sesión.');
 				return;
 			}
+
 			const response = await fetch(
 				`https://nest-luwy-pack.onrender.com/api/products/${updatedProduct.id}`,
 				{
 					method: 'PATCH',
+					// Accept: 'application/json',
 					headers: {
 						'Content-Type': 'application/json',
 						Authorization: `Bearer ${tokenStorage}`,
@@ -154,10 +140,10 @@ const TableExpandableNest = () => {
 			if (!response.ok) {
 				throw new Error(`Error al actualizar el producto: ${response.status}`);
 			}
-
+			const refreshedData = await fetchProducts();
 			// Si todo sale bien, actualiza el estado local
-			const updated = data.map((p) => (p.id === updatedProduct.id ? { ...p, ...body } : p));
-			setData(updated);
+			// const updated = data.map((p) => (p.id === updatedProduct.id ? { ...p, ...body } : p));
+			setData(refreshedData);
 		} catch (err) {
 			console.error('Error al actualizar producto:', err);
 			alert('Hubo un error al guardar los cambios.');
@@ -310,10 +296,21 @@ const TableExpandableNest = () => {
 				{
 					accessorKey: 'status',
 					header: () => 'Status',
-					cell: ({ getValue }) => {
-						const isChecked = getValue();
-
-						return <Checkbox variant='default' checked={isChecked} />;
+					cell: ({ row }) => {
+						return (
+							<Checkbox
+								variant='switch'
+								checked={row.original.status}
+								onChange={(e) => {
+									const updated = data.map((p) =>
+										p.id === row.original.id
+											? { ...p, status: e.target.checked }
+											: p,
+									);
+									setData(updated);
+								}}
+							/>
+						);
 					},
 				},
 			],
@@ -328,7 +325,7 @@ const TableExpandableNest = () => {
 						variant='link'
 						onClick={() =>
 							navigate(
-								`${pages.apps.products.subPages.editapi.to}?productId=${
+								`${pages.apps.products.subPages.editapinest.to}?productId=${
 									row.original.id
 								}`,
 							)
@@ -359,8 +356,10 @@ const TableExpandableNest = () => {
 
 								setData((prev) => prev.filter((p) => p.id !== row.original.id));
 							} catch (error) {
-								console.error('Error al eliminar el producto:', error);
-								alert('No se pudo eliminar el producto');
+								console.error('Error al eliminar:', error);
+
+								setData(data); // O mostrar un mensaje de error
+								alert('No se pudo eliminar. Por favor, intenta nuevamente.');
 							}
 						}}
 					/>

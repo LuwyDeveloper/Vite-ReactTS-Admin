@@ -60,7 +60,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 				try {
 					const parsedUser = JSON.parse(storedUserData);
 					setUserData(parsedUser);
-					console.log(storedUserData);
 				} catch (err) {
 					console.error('❌ Error al parsear userData', err);
 				}

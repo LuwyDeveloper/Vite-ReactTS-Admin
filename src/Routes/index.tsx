@@ -23,6 +23,9 @@ const ProductsListPage = lazy(() => import('@/pages/apps/products/ProductsListap
 const ProductsListNestPage = lazy(() => import('@/pages/apps/products/ProductsListNestjs.page'));
 const ProductsEditPage = lazy(() => import('@/pages/apps/products/ProductsEdit.page'));
 const ProductsEditApiPage = lazy(() => import('@/pages/apps/products/ProductsEditApi.page'));
+const ProductsEditNestPage = lazy(
+	() => import('@/pages/apps/products/ProductsEditApiNest.page'),
+);
 
 const ProductsCreatePage = lazy(() => import('@/pages/apps/products/ProductsCreate.page'));
 
@@ -121,6 +124,10 @@ const router = createBrowserRouter([
 											{
 												path: pages.apps.products.subPages.editapi.to,
 												element: <ProductsEditApiPage />,
+											},
+											{
+												path: pages.apps.products.subPages.editapinest.to,
+												element: <ProductsEditNestPage />,
 											},
 										],
 									},
