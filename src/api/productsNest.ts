@@ -143,7 +143,7 @@ const mapProductToApiPayload = (product: IProduct): Partial<IApiProduct> => ({
 });
 const updateProductNest = async (product: IProduct, token: string) => {
 	const body = mapProductToApiPayload(product);
-	const response = await fetch(`https://nest-luwy-pack.onrender.com/api/products/${product.id}`, {
+	const response = await fetch(`${BASE_PRODUCT_URL}/${product.id}`, {
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
