@@ -23,11 +23,10 @@ const ProductsListPage = lazy(() => import('@/pages/apps/products/ProductsListap
 const ProductsListNestPage = lazy(() => import('@/pages/apps/products/ProductsListNestjs.page'));
 const ProductsEditPage = lazy(() => import('@/pages/apps/products/ProductsEdit.page'));
 const ProductsEditApiPage = lazy(() => import('@/pages/apps/products/ProductsEditApi.page'));
-const ProductsEditNestPage = lazy(
-	() => import('@/pages/apps/products/ProductsEditApiNest.page'),
-);
+const ProductsEditNestPage = lazy(() => import('@/pages/apps/products/ProductsEditApiNest.page'));
 
 const ProductsCreatePage = lazy(() => import('@/pages/apps/products/ProductsCreate.page'));
+const ProductsCreateNestPage = lazy(() => import('@/pages/apps/products/ProductsCreateNest.page'));
 
 const ProjectLayout = lazy(() => import('@/pages/apps/projects/_layouts/Project.layout'));
 const ProjectDashboardPage = lazy(() => import('@/pages/apps/projects/ProjectDashboard.page'));
@@ -116,6 +115,10 @@ const router = createBrowserRouter([
 											{
 												path: pages.apps.products.subPages.create.to,
 												element: <ProductsCreatePage />,
+											},
+											{
+												path: pages.apps.products.subPages.createnest.to,
+												element: <ProductsCreateNestPage />,
 											},
 											{
 												path: pages.apps.products.subPages.edit.to,

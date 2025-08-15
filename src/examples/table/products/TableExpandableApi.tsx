@@ -204,6 +204,19 @@ const TableExpandableApi = () => {
 					},
 				},
 				{
+					accessorKey: 'img',
+					header: 'Image',
+					cell: ({ row }) => (
+						<div className='flex gap-2'>
+							<img
+								src={row.original.image}
+								alt={row.original.name}
+								className='h-10 w-10 rounded-lg object-cover'
+							/>
+						</div>
+					),
+				},
+				{
 					accessorKey: 'name',
 					header: 'Name',
 					cell: ({ row, getValue }) => (
@@ -449,15 +462,6 @@ const TableExpandableApi = () => {
 						}}>
 						Products
 					</CardTitle>
-				</CardHeaderChild>
-				<CardHeaderChild>
-					<Button
-						aria-label='Crear'
-						variant='soft'
-						color='zinc'
-						onClick={() => navigate(pages.apps.products.subPages.create.to)}>
-						Crear
-					</Button>
 				</CardHeaderChild>
 			</CardHeader>
 			<CardBody className='overflow-y-auto'>

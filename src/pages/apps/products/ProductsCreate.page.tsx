@@ -487,7 +487,7 @@ const ProductsCreateApiPage = () => {
 												color: 'red',
 												size: 'text-3xl',
 											}}>
-											Meta
+											Categorías
 										</CardTitle>
 									</CardHeaderChild>
 								</CardHeader>
@@ -541,9 +541,9 @@ const ProductsCreateApiPage = () => {
 					</div>
 					<div
 						className={classNames(
-							'sticky start-0 end-0 bottom-4 z-[999] mx-auto mt-4 flex min-h-12 items-center justify-between overflow-hidden rounded-full border border-zinc-500/25 bg-white p-2 font-bold shadow dark:bg-zinc-950',
+							'sticky start-0 end-0 bottom-4 z-[999] mx-auto mt-4 flex min-h-12 items-center justify-center overflow-hidden rounded-full border border-zinc-500/25 bg-white px-3 py-2 font-bold shadow dark:bg-zinc-950',
 							'transition-all duration-300 ease-in-out',
-							{ 'max-w-96': quickActions, 'max-w-14': !quickActions },
+							{ 'max-w-45': quickActions, 'max-w-14': !quickActions },
 						)}>
 						{!quickActions && (
 							<Button

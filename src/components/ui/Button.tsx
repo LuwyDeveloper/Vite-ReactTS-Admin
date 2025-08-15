@@ -174,7 +174,7 @@ const Button = forwardRef<HTMLButtonElement, IButtonProps>((props, ref) => {
 		lg: {
 			general: classNames(
 				{
-					'px-6': HAS_CHILDREN,
+					'px-4': HAS_CHILDREN,
 					'px-2': !HAS_CHILDREN,
 				},
 				'py-2',

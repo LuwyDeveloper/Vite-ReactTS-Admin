@@ -84,7 +84,13 @@ const apps = {
 			create: {
 				id: 'create',
 				to: '/products/create',
-				text: 'Create',
+				text: 'Create - FakeStore',
+				icon: 'PlusSignCircle',
+			},
+			createnest: {
+				id: 'createnest',
+				to: '/products/createnest',
+				text: 'Create - NestJS',
 				icon: 'PlusSignCircle',
 			},
 			edit: {

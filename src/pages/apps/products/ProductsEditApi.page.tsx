@@ -17,7 +17,6 @@ import FieldWrap from '@/components/form/FieldWrap';
 import Select from '@/components/form/Select';
 import Tooltip from '@/components/ui/Tooltip';
 import Textarea from '@/components/form/Textarea';
-import { Airpods1, Airpods2, Airpods3, Airpods4, Airpods5 } from '@/assets/images';
 import Checkbox from '@/components/form/Checkbox';
 import EXAMPLE from '@/examples/_index';
 import { IProduct, ICategory, ITags } from '@/mocks/products';
@@ -77,6 +76,7 @@ const ProductsEditApiPage = () => {
 			publish: data?.status ?? true,
 			categories: data?.category.map((cat) => cat.name) || [],
 			tags: data?.tag.map((tag) => tag.name) || [],
+			image: data?.image,
 		},
 		enableReinitialize: true,
 		onSubmit: (values) => {
@@ -295,67 +295,7 @@ const ProductsEditApiPage = () => {
 									<div className='mb-4 flex gap-4 overflow-x-auto whitespace-nowrap'>
 										<div className='relative w-48 shrink-0'>
 											<img
-												src={Airpods1}
-												alt=''
-												className='aspect-square w-full rounded-xl object-cover'
-											/>
-											<Button
-												aria-label='Cancel'
-												icon='Cancel01'
-												variant='soft'
-												color='zinc'
-												rounded='rounded-full'
-												className='absolute end-4 top-4 z-10'
-											/>
-										</div>
-										<div className='relative w-48 shrink-0'>
-											<img
-												src={Airpods2}
-												alt=''
-												className='aspect-square w-full rounded-xl object-cover'
-											/>
-											<Button
-												aria-label='Cancel'
-												icon='Cancel01'
-												variant='soft'
-												color='zinc'
-												rounded='rounded-full'
-												className='absolute end-4 top-4 z-10'
-											/>
-										</div>
-										<div className='relative w-48 shrink-0'>
-											<img
-												src={Airpods3}
-												alt=''
-												className='aspect-square w-full rounded-xl object-cover'
-											/>
-											<Button
-												aria-label='Cancel'
-												icon='Cancel01'
-												variant='soft'
-												color='zinc'
-												rounded='rounded-full'
-												className='absolute end-4 top-4 z-10'
-											/>
-										</div>
-										<div className='relative w-48 shrink-0'>
-											<img
-												src={Airpods4}
-												alt=''
-												className='aspect-square w-full rounded-xl object-cover'
-											/>
-											<Button
-												aria-label='Cancel'
-												icon='Cancel01'
-												variant='soft'
-												color='zinc'
-												rounded='rounded-full'
-												className='absolute end-4 top-4 z-10'
-											/>
-										</div>
-										<div className='relative w-48 shrink-0'>
-											<img
-												src={Airpods5}
+												src={formik.values.image}
 												alt=''
 												className='aspect-square w-full rounded-xl object-cover'
 											/>
@@ -496,7 +436,7 @@ const ProductsEditApiPage = () => {
 												color: 'red',
 												size: 'text-3xl',
 											}}>
-											Meta
+											Categorías
 										</CardTitle>
 									</CardHeaderChild>
 								</CardHeader>

@@ -5,8 +5,8 @@ import { TColors } from '@/types/colors.type';
 export interface IBaseTags {
 	id: string;
 	name: string;
-	icon: TIcons;
-	color: TColors;
+	icon?: TIcons;
+	color?: TColors;
 }
 export interface ISizes extends IBaseTags {
 	description?: string;
@@ -112,9 +112,24 @@ const fetchProducts = async (): Promise<IProduct[]> => {
 		throw err;
 	}
 };
-const generateSlug = (name: string): string => name.trim().toLowerCase().replace(/\s+/g, '-');
 
 // NESTJS EDIT PAGE
+const generateSlug = (name: string): string => name.trim().toLowerCase().replace(/\s+/g, '-');
+
+const fetchProductById = async (id: string): Promise<IProduct> => {
+	try {
+		const response = await fetch(`${BASE_PRODUCT_URL}/${id}`);
+		if (!response.ok) {
+			throw new Error(`Error al obtener el producto: ${response.status}`);
+		}
+		const apiProduct: IApiProduct = await response.json();
+		return mapApiProductToProduct(apiProduct, 0);
+	} catch (error) {
+		console.error('Error en fetchProductById:', error);
+		throw error;
+	}
+};
+
 const mapProductToApiPayload = (product: IProduct): Partial<IApiProduct> => ({
 	title: product.name,
 	price: product.price,
@@ -124,13 +139,11 @@ const mapProductToApiPayload = (product: IProduct): Partial<IApiProduct> => ({
 	sizes: product.sizes.map((s) => s.name),
 	gender: product.gender[0]?.name.toLowerCase() ?? '',
 	tags: product.tags,
-	images: product.images ?? [],
+	// images: product.images ?? [],
 });
-
 const updateProductNest = async (product: IProduct, token: string) => {
 	const body = mapProductToApiPayload(product);
-
-	const response = await fetch(`${BASE_PRODUCT_URL}/${product.id}`, {
+	const response = await fetch(`https://nest-luwy-pack.onrender.com/api/products/${product.id}`, {
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
@@ -138,13 +151,15 @@ const updateProductNest = async (product: IProduct, token: string) => {
 		},
 		body: JSON.stringify(body),
 	});
-
 	if (!response.ok) {
 		throw new Error(`Error al actualizar el producto: ${response.status}`);
 	}
-
-	return await response.json(); // puedes retornar el producto actualizado si quieres
+	if (response.status === 401) {
+		alert('Sesión expirada. Por favor inicia sesión nuevamente.');
+	}
+	return await response.json();
 };
+
 //eliminar producto
 const deleteProductNest = async (product: IProduct, token: string) => {
 	const response = await fetch(`${BASE_PRODUCT_URL}/${product.id}`, {
@@ -158,15 +173,50 @@ const deleteProductNest = async (product: IProduct, token: string) => {
 	if (!response.ok) {
 		throw new Error(`Error al eliminar el producto: ${response.status}`);
 	}
-
+	if (response.status === 401) {
+		alert('Sesión expirada. Por favor inicia sesión nuevamente.');
+	}
 	return await response.json(); // puedes retornar el producto actualizado si quieres
 };
+//Crear Producto
+const mapCreateProductToApi = (product: IProduct): Partial<IApiProduct> => ({
+	title: product.name,
+	price: product.price,
+	description: product.description,
+	slug: generateSlug(product.name),
+	stock: product.stock,
+	sizes: product.sizes.map((s) => s.name),
+	gender: product.gender[0]?.name.toLowerCase() ?? '',
+	tags: product.tags,
+	images: (product.images ?? []).map((url) => url.split('/').pop() || ''),
+});
+
+export async function createProductNest(product: IProduct, token: string): Promise<void> {
+	const body = mapCreateProductToApi(product);
+
+	const response = await fetch(`${BASE_PRODUCT_URL}`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			Authorization: `Bearer ${token}`,
+		},
+		body: JSON.stringify(body),
+	});
+
+	if (!response.ok) {
+		throw new Error(`Error al crear el producto: ${response.status}`);
+	}
+	if (response.status === 401) {
+		alert('Sesión expirada. Por favor inicia sesión nuevamente.');
+	}
+}
 
 export {
 	mapApiProductToProduct,
 	mapProductToApiPayload,
 	mapProductToApiTable,
 	fetchProducts,
+	fetchProductById,
 	updateProductNest,
 	deleteProductNest,
 	generateSlug,

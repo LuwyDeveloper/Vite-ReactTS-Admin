@@ -205,7 +205,7 @@ const DefaultAsideTemplate = () => {
 								<NavItem {...pages.apps.products.subPages?.listmock} />
 								<NavItem {...pages.apps.products.subPages?.list} />
 								<NavItem {...pages.apps.products.subPages?.listnest} />
-								<NavItem {...pages.apps.products.subPages?.create} />
+								<NavItem {...pages.apps.products.subPages?.createnest} />
 							</NavCollapse>
 
 							<NavSeparator />

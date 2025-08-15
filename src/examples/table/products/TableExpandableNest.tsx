@@ -123,7 +123,6 @@ const TableExpandableNest = () => {
 				console.error('No hay token, el usuario probablemente no ha iniciado sesión.');
 				return;
 			}
-
 			const response = await fetch(
 				`https://nest-luwy-pack.onrender.com/api/products/${updatedProduct.id}`,
 				{
@@ -139,6 +138,9 @@ const TableExpandableNest = () => {
 
 			if (!response.ok) {
 				throw new Error(`Error al actualizar el producto: ${response.status}`);
+			}
+			if (response.status === 401) {
+				alert('Sesión expirada. Por favor inicia sesión nuevamente.');
 			}
 			const refreshedData = await fetchProducts();
 			// Si todo sale bien, actualiza el estado local
@@ -357,8 +359,6 @@ const TableExpandableNest = () => {
 								setData((prev) => prev.filter((p) => p.id !== row.original.id));
 							} catch (error) {
 								console.error('Error al eliminar:', error);
-
-								setData(data); // O mostrar un mensaje de error
 								alert('No se pudo eliminar. Por favor, intenta nuevamente.');
 							}
 						}}
@@ -466,6 +466,17 @@ const TableExpandableNest = () => {
 						}}>
 						Products
 					</CardTitle>
+				</CardHeaderChild>
+				<CardHeaderChild>
+					<Button
+						aria-label='Crear'
+						variant='solid'
+						color='blue'
+						dimension='lg'
+						icon='PlusSignCircle'
+						onClick={() => navigate(pages.apps.products.subPages.createnest.to)}>
+						Crear
+					</Button>
 				</CardHeaderChild>
 			</CardHeader>
 			<CardBody className='overflow-y-auto'>

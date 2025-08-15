@@ -481,7 +481,7 @@ const ProductsEditPage = () => {
 												color: 'red',
 												size: 'text-3xl',
 											}}>
-											Meta
+											Categorías
 										</CardTitle>
 									</CardHeaderChild>
 								</CardHeader>

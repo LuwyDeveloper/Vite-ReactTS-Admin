@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 import Container from '@/components/layout/Container';
-import { useOutletContext, useSearchParams, useNavigate } from 'react-router';
+import { useOutletContext, useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import Breadcrumb from '@/components/layout/Breadcrumb';
@@ -20,44 +20,25 @@ import Tooltip from '@/components/ui/Tooltip';
 import Textarea from '@/components/form/Textarea';
 import Checkbox from '@/components/form/Checkbox';
 import { useAuth } from '@/context/authContext';
-import {
-	IProduct,
-	IGender,
-	ISizes,
-	fetchProductById,
-	updateProductNest,
-	deleteProductNest,
-} from '@/api/productsNest';
+import { IProduct, IGender, ISizes, createProductNest } from '@/api/productsNest';
 
-const ProductsEditNestPage = () => {
-	const [searchParams] = useSearchParams();
+const ProductsCreateNestPage = () => {
 	const { tokenStorage } = useAuth();
-	const productIdFromUrl = searchParams.get('productId');
-	const [product, setProduct] = useState<IProduct | null>(null);
-	const [loading, setLoading] = useState<boolean>(true);
-	const [error, setError] = useState<string | null>(null);
-
-	useEffect(() => {
-		const loadData = async () => {
-			setLoading(true);
-			try {
-				if (!productIdFromUrl) {
-					throw new Error('No se proporcionó ID del producto');
-				}
-				const singleProduct = await fetchProductById(productIdFromUrl);
-				setProduct(singleProduct); // Lo metemos en un array porque el resto del código espera un array
-			} catch (err) {
-				setError(err instanceof Error ? err.message : 'Error desconocido');
-			} finally {
-				setLoading(false);
-			}
-		};
-		loadData();
-	}, [productIdFromUrl]);
-
-	const allGenderObjects = product ? product.gender : [];
-	const allSizesObjects = product ? product.sizes : [];
-	const allTagsObjects = product ? product.tags : [];
+	const allGenderOptions: IGender[] = [
+		{ id: '1', name: 'men' },
+		{ id: '2', name: 'women' },
+		{ id: '3', name: 'kid' },
+		{ id: '4', name: 'unisex' },
+	];
+	const allSizesOptions: IGender[] = [
+		{ id: '1', name: 'XS' },
+		{ id: '2', name: 'S' },
+		{ id: '3', name: 'M' },
+		{ id: '4', name: 'L' },
+		{ id: '5', name: 'XL' },
+		{ id: '6', name: 'XXL' },
+	];
+	const allTagsOptions = ['shirt', 'pants', 'shoes', 'accessories', 'jacket'];
 
 	const validationSchema = Yup.object({
 		name: Yup.string()
@@ -78,32 +59,32 @@ const ProductsEditNestPage = () => {
 	});
 	const formik = useFormik({
 		initialValues: {
-			name: product?.name || '',
-			stock: product?.stock || 0,
-			description: product?.description || '',
-			price: product?.price || 0,
-			gender: product?.gender[0]?.name || '',
-			sizes: product?.sizes.map((size) => size.name) || [],
-			tags: product?.tags || [],
-			publish: product?.status || false,
-			image: product?.images || [],
+			name: '',
+			stock: 0,
+			description: '',
+			price: 0,
+			gender: '',
+			sizes: [],
+			tags: [],
+			publish: false,
+			image: [],
 		},
 		enableReinitialize: true,
 		validationSchema,
 		onSubmit: async (values) => {
-			const updatedProduct: IProduct = {
-				id: product?.id ?? Date.now().toString(),
+			const createdProduct: IProduct = {
+				id: Date.now().toString(),
 				name: values.name,
 				price: values.price,
 				description: values.description,
 				stock: values.stock,
-				sold: product?.sold || 0,
+				sold: 0,
 				status: values.publish,
-				gender: [allGenderObjects.find((g) => g.name === values.gender)].filter(
+				gender: [allGenderOptions.find((g) => g.name === values.gender)].filter(
 					Boolean,
 				) as IGender[],
 				sizes: values.sizes
-					.map((name) => allSizesObjects.find((s) => s.name === name))
+					.map((name) => allSizesOptions.find((s) => s.name === name))
 					.filter(Boolean) as ISizes[],
 				tags: values.tags,
 				store: ['NestAPI'],
@@ -115,32 +96,19 @@ const ProductsEditNestPage = () => {
 					alert('No hay token disponible');
 					return;
 				}
-				await updateProductNest(updatedProduct, tokenStorage);
-				alert('Producto actualizado con éxito');
+
+				// console.log(mapCreateProductToApi(createdProduct));
+				await createProductNest(createdProduct, tokenStorage);
+				alert('Producto Creado con éxito');
 				navigate(pages.apps.products.subPages.listnest.to);
 			} catch (err) {
-				console.error('Error al actualizar producto:', err);
+				console.error('Error al crear producto:', err);
 				alert('Error al guardar el producto en el servidor');
 			}
 		},
 	});
 
 	const navigate = useNavigate();
-	const handleDelete = async () => {
-		if (!product || !tokenStorage) return;
-
-		const confirmed = confirm(`¿Estás seguro de eliminar el producto "${product.name}"?`);
-		if (!confirmed) return;
-
-		try {
-			await deleteProductNest(product, tokenStorage);
-			alert('Producto eliminado con éxito');
-			navigate(pages.apps.products.subPages.listnest.to);
-		} catch (err) {
-			console.error('Error al eliminar producto:', err);
-			alert('Error al eliminar el producto');
-		}
-	};
 
 	const { setHeaderLeft } = useOutletContext<OutletContextType>();
 	useEffect(() => {
@@ -149,15 +117,9 @@ const ProductsEditNestPage = () => {
 				list={[
 					{ ...pages.apps.products },
 					{ ...pages.apps.products.subPages.listnest },
-					...(productIdFromUrl
-						? [
-								{
-									...pages.apps.products.subPages.editapinest,
-									to: undefined,
-									text: product ? product.name : 'Loading...',
-								},
-							]
-						: []),
+					{
+						text: 'Crear nuevo producto',
+					},
 				]}
 			/>,
 		);
@@ -165,61 +127,10 @@ const ProductsEditNestPage = () => {
 			setHeaderLeft(undefined);
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [productIdFromUrl, product]);
+	}, []);
 
 	const [quickActions, setQuickActions] = useState<boolean>(true);
-	// capturar las categorías únicas de los productos
-	if (loading && !product) {
-		return (
-			<Card className='h-full'>
-				<CardHeader>
-					<CardHeaderChild>
-						<CardTitle
-							iconProps={{
-								icon: 'PropertyNew',
-								color: 'blue',
-								size: 'text-3xl',
-							}}>
-							Product
-						</CardTitle>
-					</CardHeaderChild>
-				</CardHeader>
-				<CardBody className='flex h-96 items-center justify-center'>
-					<div className='flex flex-col items-center gap-4'>
-						<Icon icon='Loading' className='animate-spin text-4xl' />
-						<p>Cargando producto...</p>
-					</div>
-				</CardBody>
-			</Card>
-		);
-	}
-	if (error) {
-		return (
-			<Card className='h-full'>
-				<CardHeader>
-					<CardHeaderChild>
-						<CardTitle
-							iconProps={{
-								icon: 'PropertyNew',
-								color: 'red',
-								size: 'text-3xl',
-							}}>
-							Products
-						</CardTitle>
-					</CardHeaderChild>
-				</CardHeader>
-				<CardBody className='flex h-96 items-center justify-center'>
-					<div className='flex flex-col items-center gap-4'>
-						<Icon icon='AlertTriangle' className='text-4xl text-red-500' />
-						<p className='text-red-500'>Error: {error}</p>
-						<Button variant='outline' onClick={() => window.location.reload()}>
-							Reintentar
-						</Button>
-					</div>
-				</CardBody>
-			</Card>
-		);
-	}
+
 	return (
 		<>
 			<Subheader>
@@ -257,7 +168,7 @@ const ProductsEditNestPage = () => {
 												color: 'blue',
 												size: 'text-3xl',
 											}}>
-											Product - {formik.values.name}
+											Producto Nuevo
 										</CardTitle>
 									</CardHeaderChild>
 								</CardHeader>
@@ -393,12 +304,29 @@ const ProductsEditNestPage = () => {
 														'hover:text-blue-600',
 													)}>
 													<span>Upload a file</span>
-													<input
-														aria-label='File upload'
+													<Input
 														id='file-upload'
 														name='file-upload'
 														type='file'
 														className='sr-only'
+														accept='image/*'
+														multiple
+														onChange={(e) => {
+															const files = e.target.files;
+															if (!files || files.length === 0)
+																return;
+
+															// Crear URLs temporales de las imágenes subidas
+															const urls = Array.from(files).map(
+																(file) => URL.createObjectURL(file),
+															);
+
+															// Actualizar el estado de Formik con las nuevas imágenes
+															formik.setFieldValue('image', [
+																...formik.values.image,
+																...urls,
+															]);
+														}}
 													/>
 												</label>
 												<span className='pl-1'>or drag and drop</span>
@@ -421,7 +349,7 @@ const ProductsEditNestPage = () => {
 												color: 'emerald',
 												size: 'text-3xl',
 											}}>
-											Price
+											Precio
 										</CardTitle>
 									</CardHeaderChild>
 								</CardHeader>
@@ -478,10 +406,9 @@ const ProductsEditNestPage = () => {
 											<Label htmlFor='gender'>Gender</Label>
 											<Select
 												name='gender'
-												id='gender'
 												value={formik.values.gender}
 												onChange={formik.handleChange}>
-												{allGenderObjects.map((gender) => (
+												{allGenderOptions.map((gender) => (
 													<option key={gender.name} value={gender.name}>
 														{gender.name}
 													</option>
@@ -498,10 +425,9 @@ const ProductsEditNestPage = () => {
 											<Select
 												multiple
 												name='sizes'
-												id='sizes'
 												value={formik.values.sizes}
 												onChange={formik.handleChange}>
-												{allSizesObjects.map((size) => (
+												{allSizesOptions.map((size) => (
 													<option key={size.name} value={size.name}>
 														{size.name}
 													</option>
@@ -518,12 +444,11 @@ const ProductsEditNestPage = () => {
 											<Select
 												multiple
 												name='tags'
-												id='tags'
 												value={formik.values.tags}
 												onChange={formik.handleChange}>
-												{allTagsObjects.map((tags) => (
-													<option key={tags} value={tags}>
-														{tags}
+												{allTagsOptions.map((tag) => (
+													<option key={tag} value={tag}>
+														{tag}
 													</option>
 												))}
 											</Select>
@@ -540,9 +465,9 @@ const ProductsEditNestPage = () => {
 					</div>
 					<div
 						className={classNames(
-							'sticky start-0 end-0 bottom-4 z-[999] mx-auto mt-4 flex min-h-12 items-center justify-between overflow-hidden rounded-full border border-zinc-500/25 bg-white p-2 font-bold shadow dark:bg-zinc-950',
+							'sticky start-0 end-0 bottom-4 z-[999] mx-auto mt-4 flex min-h-12 items-center justify-center overflow-hidden rounded-full border border-zinc-500/25 bg-white px-3 py-2 font-bold shadow dark:bg-zinc-950',
 							'transition-all duration-300 ease-in-out',
-							{ 'max-w-96': quickActions, 'max-w-14': !quickActions },
+							{ 'max-w-45': quickActions, 'max-w-14': !quickActions },
 						)}>
 						{!quickActions && (
 							<Button
@@ -556,23 +481,14 @@ const ProductsEditNestPage = () => {
 						)}
 						{quickActions && (
 							<>
-								<div className='flex items-center ps-2'>
-									{product && (
-										<Button
-											aria-label='Delete'
-											color='red'
-											className='p-0!'
-											onClick={handleDelete}>
-											Delete
-										</Button>
-									)}
-								</div>
 								<div className='flex items-center gap-2'>
 									<Button
 										aria-label='Cancel'
 										color='zinc'
 										className='p-0!'
-										onClick={() => navigate(-1)}>
+										onClick={() =>
+											navigate(pages.apps.products.subPages.listnest.to)
+										}>
 										Cancel
 									</Button>
 									<div className='h-8 rounded-full border-s border-zinc-500/25'></div>
@@ -601,4 +517,4 @@ const ProductsEditNestPage = () => {
 	);
 };
 
-export default ProductsEditNestPage;
+export default ProductsCreateNestPage;
