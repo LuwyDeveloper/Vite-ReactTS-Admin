@@ -17,5 +17,10 @@
 	"Search": "Search",
 	"toSelect":"to select",
 	"toNavigate":"to navigate",
-	"toClose":"to close"
+	"toClose":"to close",
+	"Page Not Found️": "Page Not Found️",
+	"BacktoHome": "Back to Home",
+	"404error": "Sorry, the page you're looking for cannot be found.",
+	"Login": "Login",
+	"404 Not Found": "404 Not Found"
 }

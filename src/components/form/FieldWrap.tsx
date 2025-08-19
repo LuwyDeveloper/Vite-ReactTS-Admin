@@ -50,7 +50,7 @@ const FieldWrap = forwardRef<HTMLDivElement, IFieldWrapProps>((props, ref) => {
 		<div
 			ref={ref}
 			data-component-name='FieldWrap'
-			className={classNames('relative w-full', className)}
+			className={classNames(!className && 'relative w-full', className)}
 			{...rest}>
 			{firstSuffix && (
 				<div ref={divFirstRef} className={classNames(sharedClasses, 'start-2')}>

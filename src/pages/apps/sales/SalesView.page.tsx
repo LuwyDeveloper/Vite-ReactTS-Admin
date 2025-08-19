@@ -1,9 +1,9 @@
 import Container from '@/components/layout/Container';
-import { useOutletContext, useSearchParams } from 'react-router';
-import { OutletContextType } from '@/pages/apps/sales/_layouts/Sales.layout';
-import { useEffect } from 'react';
-import Breadcrumb from '@/components/layout/Breadcrumb';
-import pages from '@/Routes/pages';
+// import { useOutletContext, useSearchParams } from 'react-router';
+// import { OutletContextType } from '@/pages/apps/sales/_layouts/Sales.layout';
+// import { useEffect } from 'react';
+// import Breadcrumb from '@/components/layout/Breadcrumb';
+// import pages from '@/Routes/pages';
 import Icon from '@/components/icon/Icon';
 import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
@@ -14,25 +14,25 @@ import User from '@/mocks/users.mock';
 import PAYMENT_METHOD from '@/constants/paymentMethod.constant';
 
 const SalesViewPage = () => {
-	const [searchParams] = useSearchParams();
-	const orderId = searchParams.get('orderId');
+	// const [searchParams] = useSearchParams();
+	// const orderId = searchParams.get('orderId');
 
-	const { setHeaderLeft } = useOutletContext<OutletContextType>();
-	useEffect(() => {
-		setHeaderLeft(
-			<Breadcrumb
-				list={[
-					{ ...pages.apps.sales },
-					{ ...pages.apps.sales.subPages.view },
-					...(orderId ? [{ ...pages.apps.sales.subPages.view, text: orderId }] : []),
-				]}
-			/>,
-		);
-		return () => {
-			setHeaderLeft(undefined);
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [orderId]);
+	// const { setHeaderLeft } = useOutletContext<OutletContextType>();
+	// useEffect(() => {
+	// 	setHeaderLeft(
+	// 		<Breadcrumb
+	// 			list={[
+	// 				{ ...pages.apps.sales },
+	// 				{ ...pages.apps.sales.subPages.view },
+	// 				...(orderId ? [{ ...pages.apps.sales.subPages.view, text: orderId }] : []),
+	// 			]}
+	// 		/>,
+	// 	);
+	// 	return () => {
+	// 		setHeaderLeft(undefined);
+	// 	};
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [orderId]);
 
 	return (
 		<>

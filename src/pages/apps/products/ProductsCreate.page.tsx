@@ -20,14 +20,15 @@ import Tooltip from '@/components/ui/Tooltip';
 import Textarea from '@/components/form/Textarea';
 import { Airpods1, Airpods2, Airpods3, Airpods4, Airpods5 } from '@/assets/images';
 import Checkbox from '@/components/form/Checkbox';
-import EXAMPLE from '@/examples/_index';
 import { IProduct, ICategory, ITags } from '@/mocks/products';
 import { loadProductsFromStorage, saveProductsToStorage } from '@/context/ProductsApiContext';
+import { useTranslation } from 'react-i18next';
 
 const ProductsCreateApiPage = () => {
 	const [searchParams] = useSearchParams();
 	const productIdFromUrl = Number(searchParams.get('productId'));
 	const [products, setProducts] = useState<IProduct[]>([]);
+	const { t } = useTranslation(['menu']);
 
 	useEffect(() => {
 		const storedProducts = loadProductsFromStorage();
@@ -131,7 +132,7 @@ const ProductsCreateApiPage = () => {
 		<>
 			<Subheader>
 				<SubheaderLeft>
-					Product
+					{t('Product')}
 					<Button
 						aria-label='Prev'
 						className='p-0! font-bold'
@@ -147,7 +148,7 @@ const ProductsCreateApiPage = () => {
 						className='p-0! font-bold'
 						type='submit'
 						form='edit-product-form'>
-						Save
+						{t('Save')}
 					</Button>
 				</SubheaderRight>
 			</Subheader>
@@ -164,7 +165,7 @@ const ProductsCreateApiPage = () => {
 												color: 'blue',
 												size: 'text-3xl',
 											}}>
-											Product
+											{t('New Product')}
 										</CardTitle>
 									</CardHeaderChild>
 								</CardHeader>
@@ -196,7 +197,7 @@ const ProductsCreateApiPage = () => {
 										</div>
 										<div className='col-span-12'>
 											<div className='mb-2 flex items-center justify-between [&>*]:mb-0'>
-												<Label htmlFor='name'>Name</Label>
+												<Label htmlFor='name'>{t('Name')}</Label>
 												<Description id='name'>
 													<Tooltip text='Give your product a short and clear' />
 												</Description>
@@ -230,7 +231,7 @@ const ProductsCreateApiPage = () => {
 											)}
 										</div>
 										<div className='col-span-12 md:col-span-6'>
-											<Label htmlFor='stock'>Stock</Label>
+											<Label htmlFor='stock'>{t('Stock')}</Label>
 											<Input
 												name='stock'
 												id='stock'
@@ -245,7 +246,7 @@ const ProductsCreateApiPage = () => {
 										</div>
 
 										<div className='col-span-12'>
-											<Label htmlFor='description'>Description</Label>
+											<Label htmlFor='description'>{t('Description')}</Label>
 											<Textarea
 												name='description'
 												id='description'
@@ -400,23 +401,6 @@ const ProductsCreateApiPage = () => {
 									</div>
 								</CardBody>
 							</Card>
-							<Card>
-								<CardHeader>
-									<CardHeaderChild>
-										<CardTitle
-											iconProps={{
-												icon: 'Blend',
-												color: 'emerald',
-												size: 'text-3xl',
-											}}>
-											Variants
-										</CardTitle>
-									</CardHeaderChild>
-								</CardHeader>
-								<CardBody>
-									<EXAMPLE.Forms.General.InlineRemovableInputs />
-								</CardBody>
-							</Card>
 						</div>
 						<div className='col-span-12 flex flex-col gap-4 lg:col-span-4'>
 							<Card>
@@ -428,14 +412,14 @@ const ProductsCreateApiPage = () => {
 												color: 'emerald',
 												size: 'text-3xl',
 											}}>
-											Price
+											{t('Price')}
 										</CardTitle>
 									</CardHeaderChild>
 								</CardHeader>
 								<CardBody>
 									<div className='grid grid-cols-1 gap-4'>
 										<div className='col-span-1'>
-											<Label htmlFor='price'>Price</Label>
+											<Label htmlFor='price'>{t('Price')}</Label>
 											<FieldWrap
 												lastSuffix={
 													<Select
@@ -466,7 +450,7 @@ const ProductsCreateApiPage = () => {
 											)}
 										</div>
 										<div className='col-span-1'>
-											<Label htmlFor='publish'>Publish</Label>
+											<Label htmlFor='publish'>{t('Status')}</Label>
 											<Checkbox
 												name='publish'
 												id='publish'
@@ -487,14 +471,14 @@ const ProductsCreateApiPage = () => {
 												color: 'red',
 												size: 'text-3xl',
 											}}>
-											Categorías
+											{t('Category')}
 										</CardTitle>
 									</CardHeaderChild>
 								</CardHeader>
 								<CardBody>
 									<div className='grid grid-cols-1 gap-4'>
 										<div className='col-span-1'>
-											<Label htmlFor='categories'>Categories</Label>
+											<Label htmlFor='categories'>{t('Categories')}</Label>
 											<Select
 												multiple
 												name='categories'
@@ -515,7 +499,7 @@ const ProductsCreateApiPage = () => {
 												)}
 										</div>
 										<div className='col-span-1'>
-											<Label htmlFor='categories'>Tags</Label>
+											<Label htmlFor='categories'>{t('Tags')}</Label>
 											<Select
 												multiple
 												name='tags'
@@ -543,7 +527,7 @@ const ProductsCreateApiPage = () => {
 						className={classNames(
 							'sticky start-0 end-0 bottom-4 z-[999] mx-auto mt-4 flex min-h-12 items-center justify-center overflow-hidden rounded-full border border-zinc-500/25 bg-white px-3 py-2 font-bold shadow dark:bg-zinc-950',
 							'transition-all duration-300 ease-in-out',
-							{ 'max-w-45': quickActions, 'max-w-14': !quickActions },
+							{ 'max-w-60': quickActions, 'max-w-14': !quickActions },
 						)}>
 						{!quickActions && (
 							<Button
@@ -563,7 +547,7 @@ const ProductsCreateApiPage = () => {
 										color='zinc'
 										className='p-0!'
 										onClick={() => navigate(-1)}>
-										Cancel
+										{t('Cancel')}
 									</Button>
 									<div className='h-8 rounded-full border-s border-zinc-500/25'></div>
 									<Button
@@ -571,7 +555,7 @@ const ProductsCreateApiPage = () => {
 										className='p-0!'
 										type='submit'
 										form='edit-product-form'>
-										Save
+										{t('Save')}
 									</Button>
 									<Button
 										aria-label='Cancel'

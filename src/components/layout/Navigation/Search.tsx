@@ -5,30 +5,31 @@ import Input from '@/components/form/Input';
 import Icon from '@/components/icon/Icon';
 import classNames from 'classnames';
 import FieldWrap from '@/components/form/FieldWrap';
-import Modal, { ModalFooter, ModalFooterChild, ModalHeader } from '@/components/ui/Modal';
+import Modal, {
+	ModalFooter,
+	ModalFooterChild,
+	ModalBody,
+	ModalHeader,
+} from '@/components/ui/Modal';
 import useAsideStatus from '@/hooks/useAsideStatus';
+import pages, { TPage, TPages } from '@/Routes/pages';
 import Badge from '@/components/ui/Badge';
 import { useTranslation } from 'react-i18next';
 
+const getFlattenPages = (pages: TPages, parentId?: string): TPage[] => {
+	return Object.values(pages).flatMap((page) => {
+		const { subPages, ...pageData } = page;
+		const currentPage: TPage = { ...pageData, parentId };
+		const subPagesArray = subPages ? getFlattenPages(subPages, page.id) : [];
+		return [currentPage, ...subPagesArray];
+	});
+};
+
 const Search = () => {
 	const { asideStatus } = useAsideStatus();
+	const navigate = useNavigate();
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-	const { t } = useTranslation('translation');
-	/**
-	 * CMD + K open modal
-	 */
-	useEffect(() => {
-		const handleKeyDown = (e: KeyboardEvent) => {
-			if (e.metaKey && e.key.toLowerCase() === 'k') {
-				e.preventDefault();
-				setIsModalOpen(true);
-			}
-		};
-		window.addEventListener('keydown', handleKeyDown);
-		return () => {
-			window.removeEventListener('keydown', handleKeyDown);
-		};
-	}, []);
+	const { t } = useTranslation(['menu']);
 
 	/**
 	 * Auto focus input
@@ -48,6 +49,49 @@ const Search = () => {
 		setInputValue(e.target.value);
 	};
 
+	const flattenAppPages = getFlattenPages(pages.search as TPages);
+	const flattenExamplesPages = getFlattenPages(pages.pagesExamples as TPages);
+
+	const flattenPages = [...flattenAppPages, ...flattenExamplesPages];
+	const result = flattenPages.filter((item: TPage) =>
+		item.text.toLowerCase().includes(inputValue.toLowerCase()),
+	);
+
+	const [selectedIndex, setSelectedIndex] = useState<number>(0);
+
+	/**
+	 * Auto fist select
+	 */
+	useEffect(() => {
+		setSelectedIndex(0);
+	}, [result.length, isModalOpen]);
+
+	const handleClick = (to: string) => {
+		navigate(to);
+		setIsModalOpen(false);
+	};
+
+	const handleKeyDown = (e: KeyboardEvent) => {
+		if (e.key === 'ArrowDown') {
+			e.preventDefault();
+			setSelectedIndex((prev) => Math.min(prev + 1, result.length - 1));
+		} else if (e.key === 'ArrowUp') {
+			e.preventDefault();
+			setSelectedIndex((prev) => Math.max(prev - 1, 0));
+		} else if (e.key === 'Enter') {
+			e.preventDefault();
+			const selectedItem = result[selectedIndex];
+			if (selectedItem && selectedItem.to) {
+				handleClick(selectedItem.to);
+			}
+		}
+	};
+
+	useEffect(() => {
+		if (isModalOpen) window.addEventListener('keydown', handleKeyDown);
+		return () => window.removeEventListener('keydown', handleKeyDown);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isModalOpen, selectedIndex, result]);
 	return (
 		<>
 			{!asideStatus && (
@@ -57,7 +101,7 @@ const Search = () => {
 					color='zinc'
 					className='mb-4 !h-[44px] w-full !text-zinc-500'
 					onClick={() => setIsModalOpen(true)}
-					aria-label=''
+					aria-label={t('Search')}
 				/>
 			)}
 			<FieldWrap
@@ -97,7 +141,39 @@ const Search = () => {
 						/>
 					</FieldWrap>
 				</ModalHeader>
-
+				<ModalBody className='pt-2'>
+					<div className='flex flex-col gap-2'>
+						{result.map((item, index) => (
+							<button
+								key={item.id + index}
+								style={{
+									padding: '8px',
+									// backgroundColor: index === selectedIndex ? '#eee' : '#fff',
+									cursor: 'pointer',
+								}}
+								className={classNames(
+									'flex cursor-pointer items-center gap-4 rounded-lg border border-zinc-500/25',
+									{
+										'outline-2 outline-offset-1 outline-blue-500':
+											index === selectedIndex,
+									},
+								)}
+								onMouseEnter={() => setSelectedIndex(index)}
+								onClick={() => handleClick(item.to)}>
+								<div className='flex grow items-center gap-2'>
+									{item.icon && <Icon icon={item.icon} />}
+									{t(item.text)}
+								</div>
+								<div className='text-xs text-zinc-500'>
+									{t(
+										flattenPages.find((i) => i.id === item.parentId)?.text ||
+											'',
+									)}
+								</div>
+							</button>
+						))}
+					</div>
+				</ModalBody>
 				<ModalFooter>
 					<ModalFooterChild>
 						<div className='flex items-center gap-1 text-sm'>

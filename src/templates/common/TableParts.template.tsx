@@ -8,6 +8,7 @@ import Button from '@/components/ui/Button';
 import Input from '@/components/form/Input';
 import Select from '@/components/form/Select';
 import Checkbox from '@/components/form/Checkbox';
+import { useTranslation } from 'react-i18next';
 
 export const TableIndeterminateCheckbox = ({
 	indeterminate,
@@ -232,6 +233,7 @@ interface ITableCardFooterTemplateProps extends Partial<ITableProps> {
 	table: TTableProps<any>;
 }
 export const TableCardFooterTemplate: FC<ITableCardFooterTemplateProps> = ({ table }) => {
+	const { t } = useTranslation(['menu']);
 	return (
 		<CardFooter>
 			<CardFooterChild>
@@ -244,7 +246,7 @@ export const TableCardFooterTemplate: FC<ITableCardFooterTemplateProps> = ({ tab
 					name='pageSize'>
 					{[5, 10, 20, 30, 40, 50].map((pageSize) => (
 						<option key={pageSize} value={pageSize}>
-							Show {pageSize}
+							{t('Show')} {pageSize}
 						</option>
 					))}
 				</Select>
@@ -267,7 +269,7 @@ export const TableCardFooterTemplate: FC<ITableCardFooterTemplateProps> = ({ tab
 					className='!px-0'
 				/>
 				<span className='flex items-center gap-1'>
-					<div>Page</div>
+					<div>{t('Page')}</div>
 					<strong>
 						<Input
 							value={table.getState().pagination.pageIndex + 1}

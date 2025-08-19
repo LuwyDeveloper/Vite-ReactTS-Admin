@@ -20,6 +20,7 @@ import Table, { TBody, Td, Th, THead, Tr } from '@/components/ui/Table';
 import Icon from '@/components/icon/Icon';
 import classNames from 'classnames';
 import Input from '@/components/form/Input';
+import FieldWrap from '@/components/form/FieldWrap';
 import Badge from '@/components/ui/Badge';
 import Button from '@/components/ui/Button';
 import priceFormat from '@/utils/priceFormat.util';
@@ -28,6 +29,7 @@ import { useNavigate } from 'react-router';
 import pages from '@/Routes/pages';
 import { mapProductToApiTable, IProduct, fetchProducts } from '@/api/productsNest';
 import { useAuth } from '@/context/authContext';
+import { useTranslation } from 'react-i18next';
 
 const EditSubComponent = ({
 	row,
@@ -39,14 +41,14 @@ const EditSubComponent = ({
 	const [name, setName] = useState<string>(row.original.name);
 	const [stock, setStock] = useState<number>(row.original.stock);
 	const [price, setPrice] = useState<number>(row.original.price);
-
+	const { t } = useTranslation(['menu']);
 	return (
 		<pre>
 			<div className='grid grid-cols-12 gap-4'>
 				<div className='col-span-12 lg:col-span-3'>
 					<Input
 						name='name'
-						label='Name'
+						label={t('Name')}
 						value={name}
 						onChange={(e) => setName(e.target.value)}
 					/>
@@ -55,7 +57,7 @@ const EditSubComponent = ({
 					<Input
 						name='stock'
 						type='number'
-						label='Stock'
+						label={t('Stock')}
 						value={stock}
 						onChange={(e) => setStock(Number(e.target.value))}
 					/>
@@ -64,7 +66,7 @@ const EditSubComponent = ({
 					<Input
 						name='price'
 						type='number'
-						label='Price'
+						label={t('Price')}
 						value={price}
 						step='0.01'
 						min={0}
@@ -74,7 +76,7 @@ const EditSubComponent = ({
 				<div className='col-span-12'></div>
 				<div className='col-span-12 flex justify-end'>
 					<Button
-						aria-label='Save'
+						aria-label={t('Save')}
 						variant='soft'
 						onClick={() => {
 							onUpdate({
@@ -95,6 +97,7 @@ const EditSubComponent = ({
 
 const TableExpandableNest = () => {
 	const navigate = useNavigate();
+	const { t } = useTranslation(['menu']);
 	const { tokenStorage } = useAuth();
 
 	const [data, setData] = useState<IProduct[]>([]);
@@ -154,7 +157,8 @@ const TableExpandableNest = () => {
 
 	const columns: ColumnDef<IProduct>[] = [
 		{
-			header: 'Product',
+			id: 'product',
+			header: () => t('Product'),
 			// footer: (props) => props.column.id,
 			columns: [
 				{
@@ -207,7 +211,7 @@ const TableExpandableNest = () => {
 				},
 				{
 					accessorKey: 'images',
-					header: 'Image',
+					header: () => t('Image'),
 					cell: ({ row }) => (
 						<div className='flex gap-2'>
 							<img
@@ -220,7 +224,7 @@ const TableExpandableNest = () => {
 				},
 				{
 					accessorKey: 'name',
-					header: 'Name',
+					header: () => t('Name'),
 					cell: ({ row, getValue }) => (
 						<div
 							className='truncate'
@@ -234,11 +238,12 @@ const TableExpandableNest = () => {
 			],
 		},
 		{
-			header: 'More Info',
+			id: 'moreinfo',
+			header: () => t('MoreInfo'),
 			columns: [
 				{
 					accessorKey: 'gender',
-					header: () => 'Gender',
+					header: () => t('Gender'),
 					cell: ({ row }) => (
 						<div className='flex gap-2'>
 							{row.original.gender.map((item) => (
@@ -253,7 +258,7 @@ const TableExpandableNest = () => {
 				},
 				{
 					accessorKey: 'sizes',
-					header: () => 'Sizes',
+					header: () => t('Sizes'),
 					cell: ({ row }) => (
 						<div className='flex gap-2'>
 							{row.original.sizes.map((item) => (
@@ -270,7 +275,7 @@ const TableExpandableNest = () => {
 				},
 				{
 					accessorKey: 'store',
-					header: () => 'Store',
+					header: () => t('Store'),
 					cell: ({ row }) => (
 						<div className='flex gap-2'>
 							{row.original.store.map((item) => (
@@ -287,17 +292,17 @@ const TableExpandableNest = () => {
 				},
 				{
 					accessorKey: 'stock',
-					header: () => 'Stock',
+					header: () => t('Stock'),
 					cell: (info) => <div>{info.getValue()}</div>,
 				},
 				{
 					accessorKey: 'price',
-					header: () => 'Price',
+					header: () => t('Price'),
 					cell: (info) => <div>{priceFormat(info.getValue())}</div>,
 				},
 				{
 					accessorKey: 'status',
-					header: () => 'Status',
+					header: () => t('Status'),
 					cell: ({ row }) => {
 						return (
 							<Checkbox
@@ -318,7 +323,8 @@ const TableExpandableNest = () => {
 			],
 		},
 		{
-			header: 'Actions',
+			id: 'actions',
+			header: () => t('Actions'),
 			cell: ({ row }) => (
 				<div className='flex gap-2'>
 					<Button
@@ -407,14 +413,14 @@ const TableExpandableNest = () => {
 								color: 'blue',
 								size: 'text-3xl',
 							}}>
-							Products
+							{t('Products')}
 						</CardTitle>
 					</CardHeaderChild>
 				</CardHeader>
 				<CardBody className='flex h-96 items-center justify-center'>
 					<div className='flex flex-col items-center gap-4'>
 						<Icon icon='Loading' className='animate-spin text-4xl' />
-						<p>Cargando productos...</p>
+						<p>{t('loadingProducts')}</p>
 					</div>
 				</CardBody>
 			</Card>
@@ -432,12 +438,12 @@ const TableExpandableNest = () => {
 								color: 'red',
 								size: 'text-3xl',
 							}}>
-							Products
+							{t('Products')}
 						</CardTitle>
 					</CardHeaderChild>
 					<CardHeaderChild>
-						<Button aria-label='Crear' variant='soft' color='zinc'>
-							Crear
+						<Button aria-label={t('Create')} variant='soft' color='zinc'>
+							{t('Create')}
 						</Button>
 					</CardHeaderChild>
 				</CardHeader>
@@ -446,7 +452,7 @@ const TableExpandableNest = () => {
 						<Icon icon='AlertTriangle' className='text-4xl text-red-500' />
 						<p className='text-red-500'>Error: {error}</p>
 						<Button variant='outline' onClick={() => window.location.reload()}>
-							Reintentar
+							{t('Retry')}
 						</Button>
 					</div>
 				</CardBody>
@@ -464,21 +470,35 @@ const TableExpandableNest = () => {
 							color: 'blue',
 							size: 'text-3xl',
 						}}>
-						Products
+						{t('Products')}
 					</CardTitle>
 				</CardHeaderChild>
 				<CardHeaderChild>
 					<Button
-						aria-label='Crear'
+						aria-label={t('Create')}
 						variant='solid'
 						color='blue'
 						dimension='lg'
 						icon='PlusSignCircle'
 						onClick={() => navigate(pages.apps.products.subPages.createnest.to)}>
-						Crear
+						{t('Create')}
 					</Button>
 				</CardHeaderChild>
 			</CardHeader>
+			<div className='block'>
+				<FieldWrap
+					className='relative mx-4'
+					firstSuffix={<Icon icon='Search01' className='text-zinc-500' />}>
+					<Input
+						name='search'
+						placeholder={t('Search')}
+						type='search'
+						className='mb-4 !border-zinc-500/25 transition-all duration-300 ease-in-out hover:!border-zinc-500/50'
+						value={globalFilter}
+						onChange={(e) => setGlobalFilter(e.target.value)}
+					/>
+				</FieldWrap>
+			</div>
 			<CardBody className='overflow-y-auto'>
 				<Table>
 					<THead>

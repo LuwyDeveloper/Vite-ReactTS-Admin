@@ -18,16 +18,16 @@ import Select from '@/components/form/Select';
 import Tooltip from '@/components/ui/Tooltip';
 import Textarea from '@/components/form/Textarea';
 import Checkbox from '@/components/form/Checkbox';
-import EXAMPLE from '@/examples/_index';
 import { IProduct, ICategory, ITags } from '@/mocks/products';
 import { loadProductsFromStorage, saveProductsToStorage } from '@/context/ProductsApiContext';
+import { useTranslation } from 'react-i18next';
 
 const ProductsEditApiPage = () => {
 	const [searchParams] = useSearchParams();
 	const productIdFromUrl = Number(searchParams.get('productId'));
 	const [products, setProducts] = useState<IProduct[]>([]);
+	const { t } = useTranslation(['menu']);
 
-	// Cargar productos al iniciar:
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -37,15 +37,11 @@ const ProductsEditApiPage = () => {
 					setProducts(storedProducts);
 					return;
 				}
-
-				// Si no hay datos en localStorage, puedes cargar datos iniciales
-				// o dejarlo como un array vacío dependiendo de tus necesidades
-				const initialProducts: IProduct[] = []; // o puedes poner algunos datos por defecto
+				const initialProducts: IProduct[] = [];
 				setProducts(initialProducts);
 				saveProductsToStorage(initialProducts);
 			} catch (err) {
 				console.error('Error loading products:', err);
-				// Manejar el error según sea necesario
 			}
 		};
 
@@ -60,9 +56,7 @@ const ProductsEditApiPage = () => {
 	);
 
 	const data = products.find((p) => p.id === Number(productIdFromUrl));
-	console.log('Product ID from URL:', productIdFromUrl, typeof productIdFromUrl);
-	console.log('All products:', products);
-	console.log('Found product:', data);
+
 	const formik = useFormik({
 		initialValues: {
 			avatar: data?.image || '',
@@ -122,7 +116,7 @@ const ProductsEditApiPage = () => {
 		setProducts(updatedProducts);
 		saveProductsToStorage(updatedProducts);
 
-		alert(`🗑️ Producto "${data.name}" eliminado con éxito.`);
+		alert(`Producto "${data.name}" eliminado con éxito.`);
 		navigate(pages.apps.products.subPages.list.to);
 	};
 
@@ -158,7 +152,7 @@ const ProductsEditApiPage = () => {
 		<>
 			<Subheader>
 				<SubheaderLeft>
-					Product
+					{t('Product')}
 					<Button
 						aria-label='Prev'
 						className='p-0! font-bold'
@@ -174,7 +168,7 @@ const ProductsEditApiPage = () => {
 						className='p-0! font-bold'
 						type='submit'
 						form='edit-product-form'>
-						Save
+						{t('Save')}
 					</Button>
 				</SubheaderRight>
 			</Subheader>
@@ -191,7 +185,7 @@ const ProductsEditApiPage = () => {
 												color: 'blue',
 												size: 'text-3xl',
 											}}>
-											Product
+											{t('Product')} - {formik.values.name}
 										</CardTitle>
 									</CardHeaderChild>
 								</CardHeader>
@@ -223,7 +217,7 @@ const ProductsEditApiPage = () => {
 										</div>
 										<div className='col-span-12'>
 											<div className='mb-2 flex items-center justify-between [&>*]:mb-0'>
-												<Label htmlFor='name'>Name</Label>
+												<Label htmlFor='name'>{t('Name')}</Label>
 												<Description id='name'>
 													<Tooltip text='Give your product a short and clear' />
 												</Description>
@@ -247,7 +241,7 @@ const ProductsEditApiPage = () => {
 											/>
 										</div>
 										<div className='col-span-12 md:col-span-6'>
-											<Label htmlFor='stock'>Stock</Label>
+											<Label htmlFor='stock'>{t('Stock')}</Label>
 											<Input
 												name='stock'
 												id='stock'
@@ -257,7 +251,7 @@ const ProductsEditApiPage = () => {
 										</div>
 
 										<div className='col-span-12'>
-											<Label htmlFor='description'>Description</Label>
+											<Label htmlFor='description'>{t('Description')}</Label>
 											<Textarea
 												name='description'
 												id='description'
@@ -354,23 +348,6 @@ const ProductsEditApiPage = () => {
 									</div>
 								</CardBody>
 							</Card>
-							<Card>
-								<CardHeader>
-									<CardHeaderChild>
-										<CardTitle
-											iconProps={{
-												icon: 'Blend',
-												color: 'emerald',
-												size: 'text-3xl',
-											}}>
-											Variants
-										</CardTitle>
-									</CardHeaderChild>
-								</CardHeader>
-								<CardBody>
-									<EXAMPLE.Forms.General.InlineRemovableInputs />
-								</CardBody>
-							</Card>
 						</div>
 						<div className='col-span-12 flex flex-col gap-4 lg:col-span-4'>
 							<Card>
@@ -382,14 +359,14 @@ const ProductsEditApiPage = () => {
 												color: 'emerald',
 												size: 'text-3xl',
 											}}>
-											Price
+											{t('Price')}
 										</CardTitle>
 									</CardHeaderChild>
 								</CardHeader>
 								<CardBody>
 									<div className='grid grid-cols-1 gap-4'>
 										<div className='col-span-1'>
-											<Label htmlFor='price'>Price</Label>
+											<Label htmlFor='price'>{t('Price')}</Label>
 											<FieldWrap
 												lastSuffix={
 													<Select
@@ -415,7 +392,7 @@ const ProductsEditApiPage = () => {
 											</FieldWrap>
 										</div>
 										<div className='col-span-1'>
-											<Label htmlFor='publish'>Publish</Label>
+											<Label htmlFor='publish'>{t('Status')}</Label>
 											<Checkbox
 												name='publish'
 												id='publish'
@@ -436,14 +413,14 @@ const ProductsEditApiPage = () => {
 												color: 'red',
 												size: 'text-3xl',
 											}}>
-											Categorías
+											{t('Category')}
 										</CardTitle>
 									</CardHeaderChild>
 								</CardHeader>
 								<CardBody>
 									<div className='grid grid-cols-1 gap-4'>
 										<div className='col-span-1'>
-											<Label htmlFor='categories'>Categories</Label>
+											<Label htmlFor='categories'>{t('Categories')}</Label>
 											<Select
 												multiple
 												name='categories'
@@ -458,7 +435,7 @@ const ProductsEditApiPage = () => {
 											</Select>
 										</div>
 										<div className='col-span-1'>
-											<Label htmlFor='categories'>Tags</Label>
+											<Label htmlFor='categories'>{t('Tags')}</Label>
 											<Select
 												multiple
 												name='tags'
@@ -502,7 +479,7 @@ const ProductsEditApiPage = () => {
 											color='red'
 											className='p-0!'
 											onClick={handleDelete}>
-											Delete
+											{t('Delete')}
 										</Button>
 									)}
 								</div>
@@ -512,7 +489,7 @@ const ProductsEditApiPage = () => {
 										color='zinc'
 										className='p-0!'
 										onClick={() => navigate(-1)}>
-										Cancel
+										{t('Cancel')}
 									</Button>
 									<div className='h-8 rounded-full border-s border-zinc-500/25'></div>
 									<Button
@@ -520,7 +497,7 @@ const ProductsEditApiPage = () => {
 										className='p-0!'
 										type='submit'
 										form='edit-product-form'>
-										Save
+										{t('Save')}
 									</Button>
 									<Button
 										aria-label='Cancel'

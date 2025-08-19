@@ -28,6 +28,7 @@ import {
 	updateProductNest,
 	deleteProductNest,
 } from '@/api/productsNest';
+import { useTranslation } from 'react-i18next';
 
 const ProductsEditNestPage = () => {
 	const [searchParams] = useSearchParams();
@@ -36,6 +37,7 @@ const ProductsEditNestPage = () => {
 	const [product, setProduct] = useState<IProduct | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
+	const { t } = useTranslation(['menu']);
 
 	useEffect(() => {
 		const loadData = async () => {
@@ -45,7 +47,7 @@ const ProductsEditNestPage = () => {
 					throw new Error('No se proporcionó ID del producto');
 				}
 				const singleProduct = await fetchProductById(productIdFromUrl);
-				setProduct(singleProduct); // Lo metemos en un array porque el resto del código espera un array
+				setProduct(singleProduct);
 			} catch (err) {
 				setError(err instanceof Error ? err.message : 'Error desconocido');
 			} finally {
@@ -180,14 +182,14 @@ const ProductsEditNestPage = () => {
 								color: 'blue',
 								size: 'text-3xl',
 							}}>
-							Product
+							{t('Product')}
 						</CardTitle>
 					</CardHeaderChild>
 				</CardHeader>
 				<CardBody className='flex h-96 items-center justify-center'>
 					<div className='flex flex-col items-center gap-4'>
 						<Icon icon='Loading' className='animate-spin text-4xl' />
-						<p>Cargando producto...</p>
+						<p>{t('loadingProducts')}</p>
 					</div>
 				</CardBody>
 			</Card>
@@ -204,7 +206,7 @@ const ProductsEditNestPage = () => {
 								color: 'red',
 								size: 'text-3xl',
 							}}>
-							Products
+							{t('Product')}
 						</CardTitle>
 					</CardHeaderChild>
 				</CardHeader>
@@ -213,7 +215,7 @@ const ProductsEditNestPage = () => {
 						<Icon icon='AlertTriangle' className='text-4xl text-red-500' />
 						<p className='text-red-500'>Error: {error}</p>
 						<Button variant='outline' onClick={() => window.location.reload()}>
-							Reintentar
+							{t('Retry')}
 						</Button>
 					</div>
 				</CardBody>
@@ -224,7 +226,7 @@ const ProductsEditNestPage = () => {
 		<>
 			<Subheader>
 				<SubheaderLeft>
-					Product
+					{t('Product')}
 					<Button
 						aria-label='Prev'
 						className='p-0! font-bold'
@@ -240,7 +242,7 @@ const ProductsEditNestPage = () => {
 						className='p-0! font-bold'
 						type='submit'
 						form='edit-product-form'>
-						Save
+						{t('Save')}
 					</Button>
 				</SubheaderRight>
 			</Subheader>
@@ -257,7 +259,7 @@ const ProductsEditNestPage = () => {
 												color: 'blue',
 												size: 'text-3xl',
 											}}>
-											Product - {formik.values.name}
+											{t('Product')} - {formik.values.name}
 										</CardTitle>
 									</CardHeaderChild>
 								</CardHeader>
@@ -265,7 +267,7 @@ const ProductsEditNestPage = () => {
 									<div className='grid grid-cols-12 gap-4'>
 										<div className='col-span-12'>
 											<div className='mb-2 flex items-center justify-between [&>*]:mb-0'>
-												<Label htmlFor='name'>Name</Label>
+												<Label htmlFor='name'>{t('Name')}</Label>
 												<Description id='name'>
 													<Tooltip text='Give your product a short and clear' />
 												</Description>
@@ -285,7 +287,7 @@ const ProductsEditNestPage = () => {
 											)}
 										</div>
 										<div className='col-span-12 md:col-span-6'>
-											<Label htmlFor='stock'>Stock</Label>
+											<Label htmlFor='stock'>{t('Stock')}</Label>
 											<Input
 												name='stock'
 												id='stock'
@@ -303,7 +305,7 @@ const ProductsEditNestPage = () => {
 										</div>
 
 										<div className='col-span-12'>
-											<Label htmlFor='description'>Description</Label>
+											<Label htmlFor='description'>{t('Description')}</Label>
 											<Textarea
 												name='description'
 												id='description'
@@ -421,14 +423,14 @@ const ProductsEditNestPage = () => {
 												color: 'emerald',
 												size: 'text-3xl',
 											}}>
-											Price
+											{t('Price')}
 										</CardTitle>
 									</CardHeaderChild>
 								</CardHeader>
 								<CardBody>
 									<div className='grid grid-cols-1 gap-4'>
 										<div className='col-span-1'>
-											<Label htmlFor='price'>Price</Label>
+											<Label htmlFor='price'>{t('Price')}</Label>
 											<FieldWrap lastSuffix='USD'>
 												<Input
 													name='price'
@@ -447,7 +449,7 @@ const ProductsEditNestPage = () => {
 											)}
 										</div>
 										<div className='col-span-1'>
-											<Label htmlFor='publish'>Publish</Label>
+											<Label htmlFor='publish'>{t('Status')}</Label>
 											<Checkbox
 												name='publish'
 												id='publish'
@@ -468,14 +470,14 @@ const ProductsEditNestPage = () => {
 												color: 'red',
 												size: 'text-3xl',
 											}}>
-											Categorías
+											{t('Category')}
 										</CardTitle>
 									</CardHeaderChild>
 								</CardHeader>
 								<CardBody>
 									<div className='grid grid-cols-1 gap-4'>
 										<div className='col-span-1'>
-											<Label htmlFor='gender'>Gender</Label>
+											<Label htmlFor='gender'>{t('Gender')}</Label>
 											<Select
 												name='gender'
 												id='gender'
@@ -494,7 +496,7 @@ const ProductsEditNestPage = () => {
 											)}
 										</div>
 										<div className='col-span-1'>
-											<Label htmlFor='sizes'>Sizes</Label>
+											<Label htmlFor='sizes'>{t('Sizes')}</Label>
 											<Select
 												multiple
 												name='sizes'
@@ -514,7 +516,7 @@ const ProductsEditNestPage = () => {
 											)}
 										</div>
 										<div className='col-span-1'>
-											<Label htmlFor='tags'>Tag</Label>
+											<Label htmlFor='tags'>{t('Tag')}</Label>
 											<Select
 												multiple
 												name='tags'
@@ -563,7 +565,7 @@ const ProductsEditNestPage = () => {
 											color='red'
 											className='p-0!'
 											onClick={handleDelete}>
-											Delete
+											{t('Delete')}
 										</Button>
 									)}
 								</div>
@@ -573,7 +575,7 @@ const ProductsEditNestPage = () => {
 										color='zinc'
 										className='p-0!'
 										onClick={() => navigate(-1)}>
-										Cancel
+										{t('Cancel')}
 									</Button>
 									<div className='h-8 rounded-full border-s border-zinc-500/25'></div>
 									<Button
@@ -581,7 +583,7 @@ const ProductsEditNestPage = () => {
 										className='p-0!'
 										type='submit'
 										form='edit-product-form'>
-										Save
+										{t('Save')}
 									</Button>
 									<Button
 										aria-label='Cancel'

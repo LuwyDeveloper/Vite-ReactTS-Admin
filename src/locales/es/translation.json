@@ -17,6 +17,10 @@
 	"Search": "Buscar",
 	"toSelect":"Seleccionar",
 	"toNavigate":"Navegar",
-	"toClose":"Cerrar"
-	
+	"toClose":"Cerrar",
+	"PageNotFound️": "Página No Encontrada",
+	"BacktoHome": "Volver al inicio",
+	"404error": "Lo sentimos, no se puede encontrar la página que estás buscando.",
+	"Login": "Iniciar Sesión",
+	"404 Not Found": "404 No Encontrado"
 }

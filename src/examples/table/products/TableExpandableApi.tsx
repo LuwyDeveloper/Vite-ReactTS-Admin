@@ -28,6 +28,7 @@ import { useNavigate } from 'react-router';
 import pages from '@/Routes/pages';
 import mapFakeStoreToProduct, { IProduct, IFakeStoreProduct } from '@/mocks/products';
 import { loadProductsFromStorage, saveProductsToStorage } from '@/context/ProductsApiContext';
+import { useTranslation } from 'react-i18next';
 
 const EditSubComponent = ({
 	row,
@@ -40,14 +41,14 @@ const EditSubComponent = ({
 	const [sku, setSku] = useState<string>(row.original.sku);
 	const [stock, setStock] = useState<number>(row.original.stock);
 	const [price, setPrice] = useState<number>(row.original.price);
-
+	const { t } = useTranslation(['menu']);
 	return (
 		<pre>
 			<div className='grid grid-cols-12 gap-4'>
 				<div className='col-span-12 lg:col-span-3'>
 					<Input
 						name='name'
-						label='Name'
+						label={t('Name')}
 						value={name}
 						onChange={(e) => setName(e.target.value)}
 					/>
@@ -64,7 +65,7 @@ const EditSubComponent = ({
 					<Input
 						name='stock'
 						type='number'
-						label='Stock'
+						label={t('Stock')}
 						value={stock}
 						onChange={(e) => setStock(Number(e.target.value))}
 					/>
@@ -73,7 +74,7 @@ const EditSubComponent = ({
 					<Input
 						name='price'
 						type='number'
-						label='Price'
+						label={t('Price')}
 						value={price}
 						step='0.01'
 						min={0}
@@ -83,7 +84,7 @@ const EditSubComponent = ({
 				<div className='col-span-12'></div>
 				<div className='col-span-12 flex justify-end'>
 					<Button
-						aria-label='Save'
+						aria-label={t('Save')}
 						variant='soft'
 						onClick={() => {
 							onUpdate({
@@ -109,7 +110,7 @@ const TableExpandableApi = () => {
 	const [data, setData] = useState<IProduct[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
-
+	const { t } = useTranslation(['menu']);
 	useEffect(() => {
 		const local = loadProductsFromStorage();
 		if (local.length > 0) {
@@ -152,7 +153,8 @@ const TableExpandableApi = () => {
 
 	const columns: ColumnDef<IProduct>[] = [
 		{
-			header: 'Product',
+			id: 'productapi',
+			header: () => t('Product'),
 			// footer: (props) => props.column.id,
 			columns: [
 				{
@@ -205,7 +207,7 @@ const TableExpandableApi = () => {
 				},
 				{
 					accessorKey: 'img',
-					header: 'Image',
+					header: () => t('Image'),
 					cell: ({ row }) => (
 						<div className='flex gap-2'>
 							<img
@@ -218,7 +220,7 @@ const TableExpandableApi = () => {
 				},
 				{
 					accessorKey: 'name',
-					header: 'Name',
+					header: () => t('Name'),
 					cell: ({ row, getValue }) => (
 						<div
 							className='truncate'
@@ -246,7 +248,8 @@ const TableExpandableApi = () => {
 			],
 		},
 		{
-			header: 'More Info',
+			id: 'moreinfo',
+			header: () => t('MoreInfo'),
 			columns: [
 				{
 					accessorKey: 'category',
@@ -265,7 +268,7 @@ const TableExpandableApi = () => {
 				},
 				{
 					accessorKey: 'tag',
-					header: () => 'Tag',
+					header: () => t('Tag'),
 					cell: ({ row }) => (
 						<div className='flex gap-2'>
 							{row.original.tag.map((item) => (
@@ -282,7 +285,7 @@ const TableExpandableApi = () => {
 				},
 				{
 					accessorKey: 'store',
-					header: () => 'Store',
+					header: () => t('Store'),
 					cell: ({ row }) => (
 						<div className='flex gap-2'>
 							{row.original.store.map((item) => (
@@ -299,17 +302,17 @@ const TableExpandableApi = () => {
 				},
 				{
 					accessorKey: 'stock',
-					header: () => 'Stock',
+					header: () => t('Stock'),
 					cell: (info) => <div>{info.getValue()}</div>,
 				},
 				{
 					accessorKey: 'price',
-					header: () => 'Price',
+					header: () => t('Price'),
 					cell: (info) => <div>{priceFormat(info.getValue())}</div>,
 				},
 				{
 					accessorKey: 'status',
-					header: () => 'Status',
+					header: () => t('Status'),
 					cell: ({ row, getValue }) => {
 						const isChecked = getValue();
 						const product = row.original;
@@ -334,7 +337,8 @@ const TableExpandableApi = () => {
 			],
 		},
 		{
-			header: 'Actions',
+			id: 'actions',
+			header: () => t('Actions'),
 			cell: ({ row }) => (
 				<div className='flex gap-2'>
 					<Button
@@ -408,14 +412,14 @@ const TableExpandableApi = () => {
 								color: 'blue',
 								size: 'text-3xl',
 							}}>
-							Products
+							{t('Products')}
 						</CardTitle>
 					</CardHeaderChild>
 				</CardHeader>
 				<CardBody className='flex h-96 items-center justify-center'>
 					<div className='flex flex-col items-center gap-4'>
 						<Icon icon='Loading' className='animate-spin text-4xl' />
-						<p>Cargando productos...</p>
+						<p>{t('loadingProducts')}</p>
 					</div>
 				</CardBody>
 			</Card>
@@ -433,8 +437,13 @@ const TableExpandableApi = () => {
 								color: 'red',
 								size: 'text-3xl',
 							}}>
-							Products
+							{t('Products')}
 						</CardTitle>
+					</CardHeaderChild>
+					<CardHeaderChild>
+						<Button aria-label={t('Create')} variant='soft' color='zinc'>
+							{t('Create')}
+						</Button>
 					</CardHeaderChild>
 				</CardHeader>
 				<CardBody className='flex h-96 items-center justify-center'>
@@ -442,7 +451,7 @@ const TableExpandableApi = () => {
 						<Icon icon='AlertTriangle' className='text-4xl text-red-500' />
 						<p className='text-red-500'>Error: {error}</p>
 						<Button variant='outline' onClick={() => window.location.reload()}>
-							Reintentar
+							{t('Retry')}
 						</Button>
 					</div>
 				</CardBody>

@@ -28,6 +28,7 @@ import { useNavigate } from 'react-router';
 import pages from '@/Routes/pages';
 import PRODUCTS, { IProduct } from '@/mocks/products.mock';
 import { loadProductsFromStorage, saveProductsToStorage } from '@/context/ProductsMocksContext';
+import { useTranslation } from 'react-i18next';
 
 const EditSubComponent = ({
 	row,
@@ -40,14 +41,14 @@ const EditSubComponent = ({
 	const [sku, setSku] = useState<string>(row.original.sku);
 	const [stock, setStock] = useState<number>(row.original.stock);
 	const [price, setPrice] = useState<number>(row.original.price);
-
+	const { t } = useTranslation(['menu']);
 	return (
 		<pre>
 			<div className='grid grid-cols-12 gap-4'>
 				<div className='col-span-12 lg:col-span-3'>
 					<Input
 						name='name'
-						label='Name'
+						label={t('Name')}
 						value={name}
 						onChange={(e) => setName(e.target.value)}
 					/>
@@ -64,7 +65,7 @@ const EditSubComponent = ({
 					<Input
 						name='stock'
 						type='number'
-						label='Stock'
+						label={t('Stock')}
 						value={stock}
 						onChange={(e) => setStock(Number(e.target.value))}
 					/>
@@ -73,7 +74,7 @@ const EditSubComponent = ({
 					<Input
 						name='price'
 						type='number'
-						label='Price'
+						label={t('Price')}
 						value={price}
 						step='0.01'
 						min={0}
@@ -83,7 +84,7 @@ const EditSubComponent = ({
 				<div className='col-span-12'></div>
 				<div className='col-span-12 flex justify-end'>
 					<Button
-						aria-label='Save'
+						aria-label={t('Save')}
 						variant='soft'
 						onClick={() => {
 							onUpdate({
@@ -105,7 +106,7 @@ const EditSubComponent = ({
 
 const TableExpandableExample = () => {
 	const navigate = useNavigate();
-
+	const { t } = useTranslation(['menu']);
 	const [data, setData] = useState<IProduct[]>([]);
 
 	useEffect(() => {
@@ -121,7 +122,8 @@ const TableExpandableExample = () => {
 
 	const columns: ColumnDef<IProduct>[] = [
 		{
-			header: 'Product',
+			id: 'productmock',
+			header: () => t('Product'),
 			// footer: (props) => props.column.id,
 			columns: [
 				{
@@ -174,7 +176,7 @@ const TableExpandableExample = () => {
 				},
 				{
 					accessorKey: 'name',
-					header: 'Name',
+					header: () => t('Name'),
 					cell: ({ row, getValue }) => (
 						<div
 							className='truncate'
@@ -201,11 +203,12 @@ const TableExpandableExample = () => {
 			],
 		},
 		{
-			header: 'More Info',
+			id: 'moreinfo',
+			header: () => t('MoreInfo'),
 			columns: [
 				{
 					accessorKey: 'category',
-					header: () => 'Category',
+					header: () => t('Category'),
 					cell: ({ row }) => (
 						<div className='flex gap-2'>
 							{row.original.category.map((item) => (
@@ -220,7 +223,7 @@ const TableExpandableExample = () => {
 				},
 				{
 					accessorKey: 'tag',
-					header: () => 'Tag',
+					header: () => t('Tag'),
 					cell: ({ row }) => (
 						<div className='flex gap-2'>
 							{row.original.tag.map((item) => (
@@ -237,7 +240,7 @@ const TableExpandableExample = () => {
 				},
 				{
 					accessorKey: 'store',
-					header: () => 'Store',
+					header: () => t('Store'),
 					cell: ({ row }) => (
 						<div className='flex gap-2'>
 							{row.original.store.map((item) => (
@@ -254,17 +257,17 @@ const TableExpandableExample = () => {
 				},
 				{
 					accessorKey: 'stock',
-					header: () => 'Stock',
+					header: () => t('Stock'),
 					cell: (info) => <div>{info.getValue()}</div>,
 				},
 				{
 					accessorKey: 'price',
-					header: () => 'Price',
+					header: () => t('Price'),
 					cell: (info) => <div>{priceFormat(info.getValue())}</div>,
 				},
 				{
 					accessorKey: 'status',
-					header: () => 'Status',
+					header: () => t('Status'),
 					cell: ({ row, getValue }) => {
 						const isChecked = getValue();
 						const product = row.original;
@@ -289,7 +292,8 @@ const TableExpandableExample = () => {
 			],
 		},
 		{
-			header: 'Actions',
+			id: 'actions',
+			header: () => t('Actions'),
 			cell: ({ row }) => (
 				<div className='flex gap-2'>
 					<Button
@@ -362,7 +366,7 @@ const TableExpandableExample = () => {
 							color: 'blue',
 							size: 'text-3xl',
 						}}>
-						Products
+						{t('Products')}
 					</CardTitle>
 				</CardHeaderChild>
 			</CardHeader>
