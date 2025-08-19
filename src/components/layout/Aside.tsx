@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import useAsideStatus from '@/hooks/useAsideStatus';
 import { TIcons } from '@/types/icons.type';
 import Icon from '@/components/icon/Icon';
+import { useTranslation } from 'react-i18next';
 
 // @start-snippet:: interface
 interface IAsideHeadProps extends HTMLAttributes<HTMLElement> {
@@ -71,16 +72,16 @@ export const AsideQuickContainer: FC<IAsideQuickContainerProps> = (props) => {
 
 // @start-snippet:: interface
 interface IAsideQuickNavProps extends HTMLAttributes<HTMLElement> {
-	children: ReactNode;
+	labelkey: string;
 	icon?: TIcons;
 	className?: string;
 	isActive?: boolean;
 }
 // @end-snippet:: interface
 export const AsideQuickNav: FC<IAsideQuickNavProps> = (props) => {
-	const { icon, children, className, isActive, ...rest } = props;
+	const { icon, labelkey, className, isActive, ...rest } = props;
 	const { asideStatus } = useAsideStatus();
-
+	const { t } = useTranslation('menu');
 	return (
 		<div
 			data-component-name='Aside/AsideQuickNav'
@@ -98,7 +99,7 @@ export const AsideQuickNav: FC<IAsideQuickNavProps> = (props) => {
 			)}
 			{...rest}>
 			<div>{icon && <Icon icon={icon} size={asideStatus ? 'text-2xl' : 'text-xl'} />}</div>
-			{asideStatus && <div className=''>{children}</div>}
+			{asideStatus && <div className=''>{t(labelkey)}</div>}
 		</div>
 	);
 };

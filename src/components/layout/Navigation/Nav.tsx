@@ -415,7 +415,7 @@ export const NavTitle: FC<INavTitleProps> = (props) => {
 				)}
 				{...rest}>
 				{asideStatus ? (
-					children
+					t(children)
 				) : (
 					<div className='my-1.5 h-2 w-full max-w-[6rem] rounded-full bg-zinc-500' />
 				)}

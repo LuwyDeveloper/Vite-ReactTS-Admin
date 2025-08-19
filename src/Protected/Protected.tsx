@@ -14,7 +14,7 @@ const Protected = ({ roles }: { roles: ('admin' | 'user' | 'moderator')[] }) => 
 	useEffect(() => {
 		if (isInitializing) {
 			const interval = setInterval(() => {
-				setDots((prev) => (prev.length >= 3 ? '' : prev + '.'));
+				setDots((prev) => (prev.length >= 3 ? '' : `${prev}.`));
 			}, 500);
 			return () => clearInterval(interval);
 		}

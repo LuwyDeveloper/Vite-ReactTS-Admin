@@ -1,5 +1,6 @@
 {
 	"DemoPages": "Demo pages",
+	"Home":"Inicio",
 	"item": {
 		"itemA": "Item A",
 		"itemB": "Item B"
@@ -12,5 +13,10 @@
 	"Day": "Día",
 	"Week": "Semana",
 	"Month": "Mes",
-	"List": "Lista"
+	"List": "Lista",
+	"Search": "Buscar",
+	"toSelect":"Seleccionar",
+	"toNavigate":"Navegar",
+	"toClose":"Cerrar"
+	
 }

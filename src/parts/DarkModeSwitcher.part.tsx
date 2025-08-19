@@ -5,16 +5,18 @@ import useAsideStatus from '@/hooks/useAsideStatus';
 import useDarkMode from '@/hooks/useDarkMode';
 import DARK_MODE from '@/constants/darkMode.constant';
 import Icon from '@/components/icon/Icon';
+import { useTranslation } from 'react-i18next';
 
 interface IStyledButtonProps {
 	text: string;
 	icon: string;
 	status: TDarkMode;
 }
+
 const StyledButton: FC<IStyledButtonProps> = ({ text, icon, status }) => {
 	const { darkModeStatus, setDarkModeStatus } = useDarkMode();
 	const { asideStatus } = useAsideStatus();
-
+	const { t } = useTranslation('translation');
 	const handeClick = () => {
 		if (!asideStatus) {
 			if (darkModeStatus === DARK_MODE.DARK) {
@@ -55,7 +57,9 @@ const StyledButton: FC<IStyledButtonProps> = ({ text, icon, status }) => {
 				})}
 			/>
 			{asideStatus && (
-				<span className='truncate overflow-hidden whitespace-nowrap'>{text}</span>
+				<span className='truncate overflow-hidden whitespace-nowrap'>
+					{t(`theme.${text}`)}
+				</span>
 			)}
 		</button>
 	);
@@ -63,9 +67,9 @@ const StyledButton: FC<IStyledButtonProps> = ({ text, icon, status }) => {
 const DarkModeSwitcherPart = () => {
 	return (
 		<div className='mb-1 flex w-full overflow-hidden py-2 text-sm'>
-			<StyledButton icon='Moon02' status={DARK_MODE.DARK} text='Dark' />
-			<StyledButton icon='Sun03' status={DARK_MODE.LIGHT} text='Light' />
-			<StyledButton icon='Computer' status={DARK_MODE.SYSTEM} text='System' />
+			<StyledButton icon='Moon02' status={DARK_MODE.DARK} text='dark' />
+			<StyledButton icon='Sun03' status={DARK_MODE.LIGHT} text='light' />
+			<StyledButton icon='Computer' status={DARK_MODE.SYSTEM} text='system' />
 		</div>
 	);
 };

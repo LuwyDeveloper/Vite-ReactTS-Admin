@@ -176,7 +176,7 @@ const deleteProductNest = async (product: IProduct, token: string) => {
 	if (response.status === 401) {
 		alert('Sesión expirada. Por favor inicia sesión nuevamente.');
 	}
-	return await response.json(); // puedes retornar el producto actualizado si quieres
+	return await response.json();
 };
 //Crear Producto
 const mapCreateProductToApi = (product: IProduct): Partial<IApiProduct> => ({

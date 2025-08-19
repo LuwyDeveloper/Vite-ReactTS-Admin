@@ -5,6 +5,7 @@ import Icon from '@/components/icon/Icon';
 import { Link, useNavigate } from 'react-router';
 import Dropdown, { DropdownItem, DropdownMenu, DropdownToggle } from '@/components/ui/Dropdown';
 import Button from '@/components/ui/Button';
+import { useTranslation } from 'react-i18next';
 
 interface IBreadcrumbItemProps {
 	text: string;
@@ -19,7 +20,7 @@ interface IBreadcrumbProps {
 const Breadcrumb: FC<IBreadcrumbProps> = (props) => {
 	const { className, list, homePath = '/products' } = props;
 	const navigate = useNavigate();
-
+	const { t } = useTranslation('menu');
 	return (
 		<div
 			data-component-name='Breadcrumb'
@@ -35,7 +36,7 @@ const Breadcrumb: FC<IBreadcrumbProps> = (props) => {
 				</DropdownToggle>
 				<DropdownMenu>
 					<DropdownItem icon='Home09' onClick={() => navigate(homePath)}>
-						Home
+						{t('Home')}
 					</DropdownItem>
 					{list.map((item) => {
 						if (item.to) {
@@ -44,13 +45,13 @@ const Breadcrumb: FC<IBreadcrumbProps> = (props) => {
 									key={item.text}
 									className='last:hidden'
 									icon={item.icon}>
-									<Link to={item.to}>{item.text}</Link>
+									<Link to={item.to}>{t(item.text)}</Link>
 								</DropdownItem>
 							);
 						}
 						return (
 							<DropdownItem key={item.text} className='last:hidden' icon={item.icon}>
-								{item.text}
+								{t(item.text)}
 							</DropdownItem>
 						);
 					})}
@@ -67,14 +68,14 @@ const Breadcrumb: FC<IBreadcrumbProps> = (props) => {
 					return (
 						<Link key={item.text} className={className} to={item.to}>
 							{item.icon && <Icon icon={item.icon} />}
-							<div className='truncate max-md:max-w-32'>{item.text}</div>
+							<div className='truncate max-md:max-w-32'>{t(item.text)}</div>
 						</Link>
 					);
 				}
 				return (
 					<div key={item.text} className={className}>
 						{item.icon && <Icon icon={item.icon} />}
-						<div className='truncate max-md:max-w-32'>{item.text}</div>
+						<div className='truncate max-md:max-w-32'>{t(item.text)}</div>
 					</div>
 				);
 			})}

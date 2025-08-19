@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 					const parsedUser = JSON.parse(storedUserData);
 					setUserData(parsedUser);
 				} catch (err) {
-					console.error('❌ Error al parsear userData', err);
+					console.error('Error al parsear userData', err);
 				}
 			}
 			setIsInitializing(false);
