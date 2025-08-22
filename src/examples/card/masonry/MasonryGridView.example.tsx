@@ -1,7 +1,6 @@
 // @start-snippet:: masonryGridViewExampleSource
 import Card, { CardBody } from '@/components/ui/Card';
 import { Product1, Product2, Product3, Product4 } from '@/assets/images';
-import EXAMPLE from '@/examples/_index';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
 
@@ -27,9 +26,6 @@ const MasonryGridViewExample = () => {
 						</div>
 						<div className='flex items-center justify-between gap-4'>
 							<div className='font-semibold'>Assign:</div>
-							<div className=''>
-								<EXAMPLE.Ui.Dropdown.AvatarGroup />
-							</div>
 						</div>
 						<Button
 							aria-label='Leave Team'
@@ -55,9 +51,6 @@ const MasonryGridViewExample = () => {
 						</div>
 						<div className='flex items-center justify-between gap-4'>
 							<div className='font-semibold'>Assign:</div>
-							<div className=''>
-								<EXAMPLE.Ui.Dropdown.AvatarGroup />
-							</div>
 						</div>
 						<Button
 							aria-label='Request sent'
@@ -86,9 +79,6 @@ const MasonryGridViewExample = () => {
 						</div>
 						<div className='flex items-center justify-between gap-4'>
 							<div className='font-semibold'>Assign:</div>
-							<div className=''>
-								<EXAMPLE.Ui.Dropdown.AvatarGroup />
-							</div>
 						</div>
 						<Button
 							aria-label='Leave Team'
@@ -127,9 +117,6 @@ const MasonryGridViewExample = () => {
 						</div>
 						<div className='flex items-center justify-between gap-4'>
 							<div className='font-semibold'>Assign:</div>
-							<div className=''>
-								<EXAMPLE.Ui.Dropdown.AvatarGroup />
-							</div>
 						</div>
 						<Button
 							aria-label='Request sent'
@@ -163,9 +150,6 @@ const MasonryGridViewExample = () => {
 						</div>
 						<div className='flex items-center justify-between gap-4'>
 							<div className='font-semibold'>Assign:</div>
-							<div className=''>
-								<EXAMPLE.Ui.Dropdown.AvatarGroup />
-							</div>
 						</div>
 						<Button
 							aria-label='Leave Team'
@@ -192,9 +176,6 @@ const MasonryGridViewExample = () => {
 						</div>
 						<div className='flex items-center justify-between gap-4'>
 							<div className='font-semibold'>Assign:</div>
-							<div className=''>
-								<EXAMPLE.Ui.Dropdown.AvatarGroup />
-							</div>
 						</div>
 						<Button
 							aria-label='Join Team'
@@ -226,9 +207,6 @@ const MasonryGridViewExample = () => {
 						</div>
 						<div className='flex items-center justify-between gap-4'>
 							<div className='font-semibold'>Assign:</div>
-							<div className=''>
-								<EXAMPLE.Ui.Dropdown.AvatarGroup />
-							</div>
 						</div>
 						<Button
 							aria-label='Leave Team'
@@ -254,9 +232,6 @@ const MasonryGridViewExample = () => {
 						</div>
 						<div className='flex items-center justify-between gap-4'>
 							<div className='font-semibold'>Assign:</div>
-							<div className=''>
-								<EXAMPLE.Ui.Dropdown.AvatarGroup />
-							</div>
 						</div>
 						<Button
 							aria-label='Join Team'
@@ -284,9 +259,6 @@ const MasonryGridViewExample = () => {
 						</div>
 						<div className='flex items-center justify-between gap-4'>
 							<div className='font-semibold'>Assign:</div>
-							<div className=''>
-								<EXAMPLE.Ui.Dropdown.AvatarGroup />
-							</div>
 						</div>
 						<Button
 							aria-label='Request sent'
@@ -320,9 +292,6 @@ const MasonryGridViewExample = () => {
 						</div>
 						<div className='flex items-center justify-between gap-4'>
 							<div className='font-semibold'>Assign:</div>
-							<div className=''>
-								<EXAMPLE.Ui.Dropdown.AvatarGroup />
-							</div>
 						</div>
 						<Button
 							aria-label='Leave Team'

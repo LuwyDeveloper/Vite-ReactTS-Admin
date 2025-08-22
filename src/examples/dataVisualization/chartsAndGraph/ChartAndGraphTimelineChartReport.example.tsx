@@ -1,11 +1,10 @@
 // @start-snippet:: chartAndGraphTimelineChartReportExampleSource
 import Card, { CardBody, CardHeader, CardHeaderChild, CardTitle } from '@/components/ui/Card';
 import ChartTimelinePart from '@/parts/charts/ChartTimeline.part';
-import { Avatar1, Avatar2, Avatar3, Avatar4, Avatar5, Logo } from '@/assets/images';
+import { Avatar1, Logo } from '@/assets/images';
 import dayjs from 'dayjs';
 import Badge from '@/components/ui/Badge';
 import Avatar from '@/components/ui/Avatar';
-import AvatarGroup from '@/components/ui/AvatarGroup';
 import Progress from '@/components/ui/Progress';
 import Icon from '@/components/icon/Icon';
 import Button from '@/components/ui/Button';
@@ -85,14 +84,6 @@ const ChartAndGraphTimelineChartReportExample = () => {
 										</div>
 
 										<div className='col-span-3 text-zinc-500'>Team</div>
-										<div className='col-span-9 flex items-center gap-2'>
-											<AvatarGroup color='zinc'>
-												<Avatar src={Avatar2} size='w-6' />
-												<Avatar src={Avatar3} size='w-6' />
-												<Avatar src={Avatar4} size='w-6' />
-												<Avatar src={Avatar5} size='w-6' />
-											</AvatarGroup>
-										</div>
 									</div>
 								</div>
 							</div>

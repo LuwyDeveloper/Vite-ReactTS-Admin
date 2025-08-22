@@ -46,7 +46,8 @@
 	"Variants": "Variantes",
 	"Delete":"Borrar" ,
 	"Cancel": "Cancelar",
-	"New Product": "Producto Nuevo"
-
+	"New Product": "Producto Nuevo",
+	"Product categories": "Categoría de Productos",
+	"loading":"Cargando..."
 
 }

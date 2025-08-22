@@ -9,14 +9,11 @@ import DropdownEditTagExample from '@/examples/ui/dropdown/DropdownEditTag.examp
 import DropdownButtonGroupExample from '@/examples/ui/dropdown/DropdownButtonGroup.example';
 import DropdownFormattingButtonGroupExample from '@/examples/ui/dropdown/DropdownFormattingButtonGroup.example';
 import DropdownLoginExample from '@/examples/ui/dropdown/DropdownLogin.example';
-import DropdownShopAccountExample from '@/examples/ui/dropdown/DropdownShopAccount.example';
 import DropdownFavoritesExample from '@/examples/ui/dropdown/DropdownFavorites.example';
 import DropdownQuickLookExample from '@/examples/ui/dropdown/DropdownQuickLook.example';
 import DropdownGroupListColorExample from '@/examples/ui/dropdown/DropdownGroupListColor.example';
 import DropdownTagExample from '@/examples/ui/dropdown/DropdownTag.example';
-import DropdownAvatarGroupExample from '@/examples/ui/dropdown/DropdownAvatarGroup.example';
 import DropdownProjectExample from '@/examples/ui/dropdown/DropdownProject.example';
-import DropdownAccountExample from '@/examples/ui/dropdown/DropdownAccount.example';
 import DropdownRangeExample from '@/examples/ui/dropdown/DropdownRange.example';
 
 const EX_Dropdown = {
@@ -32,13 +29,10 @@ const EX_Dropdown = {
 	ButtonGroup: DropdownButtonGroupExample,
 	FormattingButtonGroup: DropdownFormattingButtonGroupExample,
 	Login: DropdownLoginExample,
-	ShopAccount: DropdownShopAccountExample,
 	Favorites: DropdownFavoritesExample,
 	QuickLook: DropdownQuickLookExample,
 	GroupListColor: DropdownGroupListColorExample,
 	Tag: DropdownTagExample,
-	AvatarGroup: DropdownAvatarGroupExample,
 	Project: DropdownProjectExample,
-	Account: DropdownAccountExample,
 };
 export default EX_Dropdown;

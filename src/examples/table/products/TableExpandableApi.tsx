@@ -21,6 +21,7 @@ import Icon from '@/components/icon/Icon';
 import classNames from 'classnames';
 import Input from '@/components/form/Input';
 import Badge from '@/components/ui/Badge';
+import FieldWrap from '@/components/form/FieldWrap';
 import Button from '@/components/ui/Button';
 import priceFormat from '@/utils/priceFormat.util';
 import Checkbox from '@/components/form/Checkbox';
@@ -469,10 +470,24 @@ const TableExpandableApi = () => {
 							color: 'blue',
 							size: 'text-3xl',
 						}}>
-						Products
+						{t('Products')}
 					</CardTitle>
 				</CardHeaderChild>
 			</CardHeader>
+			<div className='block'>
+				<FieldWrap
+					className='relative mx-4'
+					firstSuffix={<Icon icon='Search01' className='text-zinc-500' />}>
+					<Input
+						name='search'
+						placeholder={t('Search')}
+						type='search'
+						className='mb-4 !border-zinc-500/25 transition-all duration-300 ease-in-out hover:!border-zinc-500/50'
+						value={globalFilter}
+						onChange={(e) => setGlobalFilter(e.target.value)}
+					/>
+				</FieldWrap>
+			</div>
 			<CardBody className='overflow-y-auto'>
 				<Table>
 					<THead>

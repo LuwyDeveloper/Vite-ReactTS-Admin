@@ -1,6 +1,6 @@
 // @start-snippet:: statSeparateCardsExampleSource
 import Card, { CardBody } from '@/components/ui/Card';
-import { Bing, Google, Yahoo, Yandex } from '@/assets/images';
+// import { Bing, Google, Yahoo, Yandex } from '@/assets/images';
 import priceFormat from '@/utils/priceFormat.util';
 import Badge from '@/components/ui/Badge';
 import Icon from '@/components/icon/Icon';
@@ -11,7 +11,7 @@ const StatSeparateCardsExample = () => {
 			<CardBody className='!p-0'>
 				<div className='grid grid-cols-1 divide-x divide-y divide-zinc-500/10 lg:grid-cols-2 xl:grid-cols-4 xl:divide-y-0 dark:divide-zinc-500/25 [&>*]:p-6'>
 					<div className='flex flex-col gap-4'>
-						<img src={Google} alt='Google' className='size-12' />
+						{/* <img src={Google} alt='Google' className='size-12' /> */}
 						<div className='text-4xl font-extrabold text-blue-500'>
 							{priceFormat(2134191)}
 						</div>
@@ -23,7 +23,7 @@ const StatSeparateCardsExample = () => {
 						</div>
 					</div>
 					<div className='flex flex-col gap-4'>
-						<img src={Bing} alt='Bing' className='size-12' />
+						{/* <img src={Bing} alt='Bing' className='size-12' /> */}
 						<div className='text-4xl font-extrabold text-blue-500'>
 							{priceFormat(1241245)}
 						</div>
@@ -35,7 +35,7 @@ const StatSeparateCardsExample = () => {
 						</div>
 					</div>
 					<div className='flex flex-col gap-4'>
-						<img src={Yandex} alt='Yandex' className='size-12' />
+						{/* <img src={Yandex} alt='Yandex' className='size-12' /> */}
 						<div className='text-4xl font-extrabold text-blue-500'>
 							{priceFormat(96831)}
 						</div>
@@ -47,7 +47,7 @@ const StatSeparateCardsExample = () => {
 						</div>
 					</div>
 					<div className='flex flex-col gap-4'>
-						<img src={Yahoo} alt='Yahoo' className='size-12' />
+						{/* <img src={Yahoo} alt='Yahoo' className='size-12' /> */}
 						<div className='text-4xl font-extrabold text-blue-500'>
 							{priceFormat(60812)}
 						</div>

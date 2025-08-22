@@ -1,4 +1,4 @@
-import { Avatar1, Avatar2, Avatar3, Avatar4, Avatar5 } from '@/assets/images';
+import { Avatar1 } from '@/assets/images';
 import { TColors } from '@/types/colors.type';
 
 export type TUser = {
@@ -23,7 +23,7 @@ export type TUser = {
 };
 
 type TUsers = {
-	[key in 'johndoe' | 'aulisTiainen' | 'nicolasLefevre' | 'oliviaNovak' | 'luwyDyro']: TUser;
+	[key in 'luwyDyro']: TUser;
 };
 
 const USERS: TUsers = {
@@ -46,87 +46,6 @@ const USERS: TUsers = {
 		twoFactorAuth: true,
 		phone: '+51 999 999 999',
 		color: 'blue',
-	},
-
-	johndoe: {
-		id: '5',
-		username: 'johndoe',
-		firstName: 'John',
-		lastName: 'Doe',
-		email: 'johndoe@site.com',
-		password: '!123Asd',
-		position: 'Web Developer',
-		isVerified: true,
-		image: { org: Avatar4 as string },
-		socialAuth: {
-			google: true,
-			facebook: false,
-			apple: true,
-		},
-		role: 'admin',
-		twoFactorAuth: true,
-		phone: '+1 (555) 555-1234',
-		color: 'blue',
-	},
-	aulisTiainen: {
-		id: '2',
-		username: 'aulisTiainen',
-		firstName: 'Aulis',
-		lastName: 'Tiainen',
-		email: 'aulistiainen@site.com',
-		password: '!123Asd',
-		position: 'Web Developer',
-		isVerified: true,
-		image: { org: Avatar5 as string },
-		socialAuth: {
-			google: true,
-			facebook: false,
-			apple: true,
-		},
-		role: 'admin',
-		twoFactorAuth: true,
-		phone: '+1 (555) 555-1234',
-		color: 'amber',
-	},
-	nicolasLefevre: {
-		id: '3',
-		username: 'nicolaslefevre',
-		firstName: 'Nicolas',
-		lastName: 'Lefèvre',
-		email: 'nicolaslefevre@site.com',
-		password: '!123Asd',
-		position: 'Web Developer',
-		isVerified: true,
-		image: { org: Avatar2 as string },
-		socialAuth: {
-			google: true,
-			facebook: false,
-			apple: true,
-		},
-		role: 'admin',
-		twoFactorAuth: true,
-		phone: '+1 (555) 555-1234',
-		color: 'emerald',
-	},
-	oliviaNovak: {
-		id: '4',
-		username: 'oliviaNovak',
-		firstName: 'Olivia',
-		lastName: 'Novak',
-		email: 'nicolaslefevre@site.com',
-		password: '!123Asd',
-		position: 'Web Developer',
-		isVerified: true,
-		image: { org: Avatar3 as string },
-		socialAuth: {
-			google: true,
-			facebook: false,
-			apple: true,
-		},
-		role: 'admin',
-		twoFactorAuth: true,
-		phone: '+1 (555) 555-1234',
-		color: 'sky',
 	},
 };
 

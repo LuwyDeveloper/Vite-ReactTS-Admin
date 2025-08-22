@@ -18,10 +18,6 @@ const ImportAndExportImportContactsExample = () => {
 					</CardTitle>
 				</CardHeaderChild>
 			</CardHeader>
-			<CardBody>
-				<EXAMPLE.PageSections.ListGroup.LogoWithButton />
-				<hr className='border-dashed border-zinc-500/25' />
-			</CardBody>
 			<CardHeader>
 				<CardHeaderChild>
 					<CardSubTitle>Import contacts</CardSubTitle>
